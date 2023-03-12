@@ -1,69 +1,167 @@
-@import url('https://fonts.googleapis.com/css2?family=Sofia+Sans+Semi+Condensed&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Sofia+Sans+Semi+Condensed&display=swap");
 
 body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #344459;
-    font-family: 'Sofia Sans Semi Condensed', sans-serif;
-    color: white;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #344459;
+  font-family: "Sofia Sans Semi Condensed", sans-serif;
+  color: white;
 }
 
 .page-header {
-    width: 100%;
-    height: 5vh;
-    background-color: #253140;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5vh;
-    font-size: 25px;
-    position: fixed;
+  width: 100%;
+  height: 5vh;
+  background-color: #253140;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5vh;
+  font-size: 25px;
+  position: fixed;
 }
 
 .header-option {
-    cursor: pointer;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  color: white;
+}
+
+.header-option::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.header-option:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }
 
 .header-right {
-    position: absolute;
-    right: 20vh;
+  position: absolute;
+  right: 20vh;
 }
 
 .user-menu {
-    position: absolute;
-    right: 6vh;
-    width: 30vh;
-    height: 14vh;
-    background-color: #435973;
-    top: 5vh;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    display: none;
+  position: absolute;
+  right: 6vh;
+  width: 30vh;
+  height: 14vh;
+  background-color: #435973;
+  top: 5vh;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  display: none;
 }
 
 .user-menu-option {
-    position: relative;
-    width: 80%;
-    left: 10%;
-    border-radius: 10px;
-    margin-top: 1vh;
-    background-color: #253140;
-    height: 5vh;
-    font-size: 20px;
-    cursor: pointer;
+  position: relative;
+  width: 80%;
+  left: 10%;
+  border-radius: 10px;
+  margin-top: 1vh;
+  background-color: #253140;
+  height: 5vh;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.user-menu-option span { 
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+.user-menu-option:hover {
+  background-color: white;
+  color: #253140;
+}
+
+.user-menu-option span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .user-menu-option i {
-    position: absolute;
-    right: 1vh;
-    top: 50%;
-    transform: translateY(-50%);
+  position: absolute;
+  right: 1vh;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.login-page,
+#login-form,
+.register-page,
+#register-form {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 4vh;
+  width: 60vh;
+  height: 60vh;
+  background-color: #253140;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+}
+
+.login-page,
+.register-page span {
+  font-size: 20px;
+}
+
+.register-page {
+  height: 70vh !important;
+}
+
+form {
+  width: 100%;
+  /* height: 100%; */
+}
+
+.single-input {
+  width: 80%;
+  display: flex;
+  margin-bottom: 15px;
+  border-bottom: 2px solid gray;
+}
+.single-input i {
+  padding: 8px 16px;
+  color: white;
+}
+.single-input input {
+  width: 100%;
+  outline: none;
+  height: 30px;
+  font-size: 18px;
+  background-color: transparent;
+  border: none;
+  color: white;
+}
+
+.submit-btn {
+  border: 0px solid #c1c1c1;
+}
+.submit-btn input {
+  background: #344459;
+  color: #fff;
+  cursor: pointer;
+  height: 5vh;
+  border-radius: 10px;
+  font-size: 20px;
+  transition: 0.3s;
+}
+
+.submit-btn input:hover {
+  background-color: white;
+  color: #344459;
 }

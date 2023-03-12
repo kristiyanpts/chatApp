@@ -11,11 +11,20 @@ export function checkUserState() {
   }
 }
 
+let menuOpen = false;
 export function toggleUserMenu() {
   let menu = document.querySelector(".user-menu");
-  if (menu.style.display === "none") {
+  if (!menuOpen) {
     menu.style.display = "block";
+    menuOpen = true;
   } else {
     menu.style.display = "none";
+    menuOpen = false;
   }
+}
+
+export function hideSections() {
+  document
+    .querySelectorAll("sector")
+    .forEach((s) => (s.style.display = "none"));
 }
