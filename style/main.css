@@ -203,7 +203,7 @@ a:active {
   top: 5vh;
   width: 100%;
   height: 95vh;
-  background-color: red;
+  display: flex;
 }
 
 .settings-nav {
@@ -214,7 +214,7 @@ a:active {
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
-  padding-right: 20vh;
+  padding-right: 10vh;
 }
 
 .s-nav-title {
@@ -237,8 +237,121 @@ a:active {
   display: flex;
   /* gap: 1vh; */
   cursor: pointer;
+  font-variant: small-caps;
+  font-weight: 700;
 }
 
 .menu-option i {
   width: 60px;
+}
+
+.settings-blocks {
+  width: 75%;
+  height: 100%;
+  background-color: purple;
+}
+
+.settings-option {
+  position: absolute;
+  width: 50%;
+  height: 30%;
+  background-color: #253140;
+  top: 50%;
+  left: 60%;
+  transform: translate(-60%, -50%);
+  border-radius: 10px;
+  display: flex;
+}
+
+.option-left {
+  width: 40%;
+  height: 100%;
+  background-color: #344459;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.option-right {
+  width: 60%;
+  height: 100%;
+}
+
+.left-title {
+  position: relative;
+  top: 2vh;
+  font-size: 30px;
+  left: 10%;
+}
+
+.left-desc {
+  position: relative;
+  width: 80%;
+  top: 3vh;
+  font-size: 20px;
+  left: 10%;
+}
+
+.settings-username {
+  position: relative;
+  display: block;
+  outline: none;
+  top: 2vh;
+  border: 1px solid gray;
+  border-radius: 10px;
+  width: 80%;
+  left: 10%;
+  height: 5vh;
+  background-color: transparent;
+  color: white;
+  font-size: 20px;
+  padding-left: 2vh;
+}
+
+.settings-username:focus {
+  border: 1px solid white;
+}
+
+.settings-username:focus ~ .username-label {
+  color: white;
+}
+
+.username-label {
+  position: absolute;
+  margin-left: 8%;
+  margin-top: -2.3vh;
+  font-size: 25px;
+  background-color: #253140;
+  cursor: text;
+  color: gray;
+  transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
+}
+
+.settings-username:focus ~ .username-label,
+.settings-username:not(:placeholder-shown).settings-username:not(:focus)
+  ~ .username-label {
+  margin-top: -4.3vh;
+  font-size: 1rem;
+  margin-left: 9%;
+}
+
+.save-changes {
+  position: absolute;
+  right: 4vh;
+  bottom: 2vh;
+  width: 20vh;
+  height: 5vh;
+  border-radius: 10px;
+  background-color: #344459;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 20px;
+  font-variant: small-caps;
+  border: 2px solid gray;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.save-changes:hover {
+  border: 2px solid white;
 }
