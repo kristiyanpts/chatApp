@@ -15,8 +15,8 @@ let navs = {
 
 window.onload = function () {
   checkUserState();
-  hideSections();
-  showHomePage();
+  // hideSections();
+  // showHomePage();
   document
     .getElementById("user-menu")
     .addEventListener("click", toggleUserMenu);

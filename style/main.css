@@ -55,7 +55,7 @@ body {
   position: absolute;
   right: 6vh;
   width: 30vh;
-  height: 14vh;
+  height: 20vh;
   background-color: #435973;
   top: 5vh;
   border-bottom-left-radius: 10px;
@@ -95,6 +95,13 @@ body {
   transform: translateY(-50%);
 }
 
+.profile-name {
+  position: relative;
+  text-align: center;
+  margin-top: 1vh;
+  font-size: 25px;
+}
+
 .login-page,
 #login-form,
 .register-page,
@@ -120,7 +127,7 @@ body {
 }
 
 .register-page {
-  height: 70vh !important;
+  height: 75vh !important;
 }
 
 form {
@@ -189,4 +196,49 @@ a:active {
 .home-page {
   position: relative;
   top: 5vh;
+}
+
+.settings-page {
+  position: absolute;
+  top: 5vh;
+  width: 100%;
+  height: 95vh;
+  background-color: red;
+}
+
+.settings-nav {
+  width: 25%;
+  height: 100%;
+  background-color: blue;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  padding-right: 20vh;
+}
+
+.s-nav-title {
+  width: 70%;
+  font-size: 60px;
+  font-weight: 700;
+}
+
+.s-nav-menu {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.menu-option {
+  margin-top: 2vh;
+  font-size: 25px;
+  display: flex;
+  /* gap: 1vh; */
+  cursor: pointer;
+}
+
+.menu-option i {
+  width: 60px;
 }

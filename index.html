@@ -28,14 +28,19 @@
     </div>
 
     <div class="user-menu">
+      <div class="profile-name" id="profile-name">Welcome, Pesho!</div>
       <a class="user-menu-option guest" href="/login">
         <span>Sign In</span> <i class="fa-solid fa-right-to-bracket"></i>
       </a>
       <a class="user-menu-option guest" href="/register">
         <span>Register</span> <i class="fa-solid fa-user-plus"></i>
       </a>
-      <div class="user-menu-option user"><span>Settings</span></div>
-      <div class="user-menu-option user" id="logout"><span>Logout</span></div>
+      <div class="user-menu-option user">
+        <span>Settings</span> <i class="fa-solid fa-gear"></i>
+      </div>
+      <div class="user-menu-option user" id="logout">
+        <span>Logout</span> <i class="fa-solid fa-right-from-bracket"></i>
+      </div>
     </div>
 
     <main></main>
@@ -74,6 +79,10 @@
           <input type="email" name="email" placeholder="Email" />
         </div>
         <div class="single-input">
+          <span><i class="fas fa-user"></i></span>
+          <input type="text" name="username" placeholder="Username" />
+        </div>
+        <div class="single-input">
           <span><i class="fas fa-unlock"></i></span>
           <input type="password" name="password" placeholder="Password" />
         </div>
@@ -94,6 +103,25 @@
           <a href="#" id="sign-in-text">Sign In</a></span
         >
       </form>
+    </sector>
+
+    <sector class="settings-page">
+      <div class="settings-nav">
+        <div class="s-nav-title">Account <br />Management</div>
+        <div class="s-nav-menu">
+          <div class="menu-option">
+            <i class="fa-solid fa-signature"></i> <span>Username</span>
+          </div>
+          <div class="menu-option">
+            <i class="fa-solid fa-user"></i>
+            <span>Personal Information</span>
+          </div>
+          <div class="menu-option">
+            <i class="fa-solid fa-key"></i>
+            <span>Account Sign-In</span>
+          </div>
+        </div>
+      </div>
     </sector>
   </body>
 </html>

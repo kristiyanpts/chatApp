@@ -27,8 +27,7 @@ async function loginUser(e) {
       "userData",
       JSON.stringify({
         email: user.email,
-        accessToken: user.accessToken,
-        id: user._id,
+        username: user.username,
       })
     );
     checkUserState();

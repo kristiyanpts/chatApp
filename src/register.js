@@ -14,7 +14,7 @@ export function showRegisterPage() {
 async function registerUser(e) {
   e.preventDefault();
   let formData = new FormData(e.target);
-  let { email, password, repeatPassword } = Object.fromEntries(
+  let { email, username, password, repeatPassword } = Object.fromEntries(
     formData.entries()
   );
   let regex = /([a-z0-9]+)@([a-z]+).([a-z]+)/g;
@@ -34,13 +34,12 @@ async function registerUser(e) {
     alert("Passwords do not match.");
     return;
   }
-  let user = await post("/chatApp/users", { email, password });
+  let user = await post("/chatApp/users", { email, password, username });
   localStorage.setItem(
     "userData",
     JSON.stringify({
-      email: user.email,
-      accessToken: user.accessToken,
-      id: user._id,
+      email,
+      username,
     })
   );
   checkUserState();
