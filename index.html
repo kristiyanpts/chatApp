@@ -17,10 +17,10 @@
   </head>
   <body>
     <div class="page-header">
-      <div class="header-option">Home</div>
-      <div class="header-option user">My Chats</div>
-      <div class="header-option user">One-Time Chat</div>
-      <div class="header-option">About</div>
+      <a class="header-option" href="/home">Home</a>
+      <a class="header-option user" href="/mychats">My Chats</a>
+      <a class="header-option user" href="/onetimechat">One-Time Chat</a>
+      <a class="header-option" href="/about">About</a>
 
       <div class="header-option header-right" id="user-menu">
         <i class="fa-solid fa-user"></i>
@@ -28,15 +28,19 @@
     </div>
 
     <div class="user-menu">
-      <div class="user-menu-option guest" id="sign-in">
+      <a class="user-menu-option guest" href="/login">
         <span>Sign In</span> <i class="fa-solid fa-right-to-bracket"></i>
-      </div>
-      <div class="user-menu-option guest" id="register">
+      </a>
+      <a class="user-menu-option guest" href="/register">
         <span>Register</span> <i class="fa-solid fa-user-plus"></i>
-      </div>
+      </a>
       <div class="user-menu-option user"><span>Settings</span></div>
-      <div class="user-menu-option user"><span>Logout</span></div>
+      <div class="user-menu-option user" id="logout"><span>Logout</span></div>
     </div>
+
+    <main></main>
+
+    <sector class="home-page"> ZDR SHOPI </sector>
 
     <sector class="login-page">
       <form id="login-form">
