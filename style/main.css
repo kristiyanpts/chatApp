@@ -7,6 +7,7 @@ body {
   background-color: #344459;
   font-family: "Sofia Sans Semi Condensed", sans-serif;
   color: white;
+  overflow: hidden;
 }
 
 .page-header {
@@ -61,6 +62,7 @@ body {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   display: none;
+  z-index: 1;
 }
 
 .user-menu-option {
@@ -209,7 +211,6 @@ a:active {
 .settings-nav {
   width: 25%;
   height: 100%;
-  background-color: blue;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -239,6 +240,7 @@ a:active {
   cursor: pointer;
   font-variant: small-caps;
   font-weight: 700;
+  transition: 0.3s;
 }
 
 .menu-option i {
@@ -248,7 +250,6 @@ a:active {
 .settings-blocks {
   width: 75%;
   height: 100%;
-  background-color: purple;
 }
 
 .settings-option {
@@ -260,13 +261,12 @@ a:active {
   left: 60%;
   transform: translate(-60%, -50%);
   border-radius: 10px;
-  display: flex;
 }
 
 .option-left {
   width: 40%;
   height: 100%;
-  background-color: #344459;
+  background-color: #253140;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 }
@@ -274,6 +274,16 @@ a:active {
 .option-right {
   width: 60%;
   height: 100%;
+  border-left: 1px solid gray;
+}
+
+.option-right span {
+  position: relative;
+  display: block;
+  width: 80%;
+  top: 1vh;
+  font-size: 20px;
+  left: 10%;
 }
 
 .left-title {
@@ -291,34 +301,47 @@ a:active {
   left: 10%;
 }
 
-.settings-username {
+.settings-username,
+.settings-username2,
+.settings-username3,
+.settings-username4 {
   position: relative;
   display: block;
   outline: none;
-  top: 2vh;
+  margin-top: 2vh;
   border: 1px solid gray;
   border-radius: 10px;
   width: 80%;
   left: 10%;
   height: 5vh;
   background-color: transparent;
-  color: white;
+  color: gray;
   font-size: 20px;
   padding-left: 2vh;
 }
 
-.settings-username:focus {
+.settings-username:focus,
+.settings-username2:focus,
+.settings-username3:focus,
+.settings-username4:focus {
   border: 1px solid white;
-}
-
-.settings-username:focus ~ .username-label {
   color: white;
 }
 
-.username-label {
+.settings-username:focus ~ .username-label,
+.settings-username2:focus ~ .username-2-label,
+.settings-username3:focus ~ .username-3-label,
+.settings-username4:focus ~ .username-4-label {
+  color: white;
+}
+
+.username-label,
+.username-2-label,
+.username-3-label,
+.username-4-label {
   position: absolute;
   margin-left: 8%;
-  margin-top: -2.3vh;
+  margin-top: -4.3vh;
   font-size: 25px;
   background-color: #253140;
   cursor: text;
@@ -328,8 +351,17 @@ a:active {
 
 .settings-username:focus ~ .username-label,
 .settings-username:not(:placeholder-shown).settings-username:not(:focus)
-  ~ .username-label {
-  margin-top: -4.3vh;
+  ~ .username-label,
+.settings-username2:focus ~ .username-2-label,
+.settings-username2:not(:placeholder-shown).settings-username2:not(:focus)
+  ~ .username-2-label,
+.settings-username3:focus ~ .username-3-label,
+.settings-username3:not(:placeholder-shown).settings-username3:not(:focus)
+  ~ .username-3-label,
+.settings-username4:focus ~ .username-4-label,
+.settings-username4:not(:placeholder-shown).settings-username4:not(:focus)
+  ~ .username-4-label {
+  margin-top: -6.3vh;
   font-size: 1rem;
   margin-left: 9%;
 }
@@ -347,11 +379,122 @@ a:active {
   color: white;
   font-size: 20px;
   font-variant: small-caps;
-  border: 2px solid gray;
   transition: 0.3s;
   cursor: pointer;
 }
 
 .save-changes:hover {
-  border: 2px solid white;
+  background-color: white;
+  color: #344459;
+}
+
+.settings-selected {
+  color: lightblue;
+}
+
+.delete-account {
+  position: relative;
+  width: 80%;
+  left: 10%;
+  outline: none;
+  border: none;
+  height: 5vh;
+  border-radius: 10px;
+  background-color: #344459;
+  color: white;
+  font-size: 20px;
+  top: 10vh;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.delete-account:hover {
+  background-color: red;
+}
+
+.notification {
+  position: absolute;
+  bottom: 2vh;
+  right: 2vh;
+  width: 30vh;
+  height: 5vh;
+  background-color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  font-size: 20px;
+  transition: 0.5s opacity;
+  opacity: 0;
+}
+
+.loader {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: linear-gradient(#f07e6e, #84cdfa, #5ad1cd);
+  animation: animate 1.2s linear infinite;
+}
+
+@keyframes animate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader span {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(#f07e6e, #84cdfa, #5ad1cd);
+}
+
+.loader span:nth-child(1) {
+  filter: blur(5px);
+}
+
+.loader span:nth-child(2) {
+  filter: blur(10px);
+}
+
+.loader span:nth-child(3) {
+  filter: blur(25px);
+}
+
+.loader span:nth-child(4) {
+  filter: blur(50px);
+}
+
+.loader:after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  background: #f1f1f1;
+  border: solid white 10px;
+  border-radius: 50%;
+}
+
+.loading-page {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 2;
+  flex-direction: column;
+  gap: 5vh;
+}
+
+.loading-page span {
+  font-size: 25px;
 }

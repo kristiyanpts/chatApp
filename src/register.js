@@ -1,6 +1,6 @@
 import { post } from "./data/api.js";
 import { showHomePage } from "./homePage.js";
-import { checkUserState, hideSections } from "./utils.js";
+import { checkUserState, hideSections, toggleLoading } from "./utils.js";
 let registerPage = document.querySelector(".register-page");
 
 export function showRegisterPage() {
@@ -13,6 +13,7 @@ export function showRegisterPage() {
 
 async function registerUser(e) {
   e.preventDefault();
+  toggleLoading(true, "Trying to register your profile...");
   let formData = new FormData(e.target);
   let { email, username, password, repeatPassword } = Object.fromEntries(
     formData.entries()
@@ -40,8 +41,11 @@ async function registerUser(e) {
     JSON.stringify({
       email,
       username,
+      password,
+      id: user.name,
     })
   );
   checkUserState();
   showHomePage();
+  toggleLoading(false);
 }

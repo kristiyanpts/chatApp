@@ -1,6 +1,8 @@
 import { showHomePage } from "./homePage.js";
 import { showLoginPage } from "./login.js";
 import { showRegisterPage } from "./register.js";
+import { showSettingsPage } from "./settings.js";
+import { saveEmail, saveUsername } from "./update.js";
 import { checkUserState, hideSections, toggleUserMenu } from "./utils.js";
 
 let navs = {
@@ -11,12 +13,13 @@ let navs = {
   "/login": showLoginPage,
   "/register": showRegisterPage,
   "/logout": logoutUser,
+  "/settings": showSettingsPage,
 };
 
 window.onload = function () {
   checkUserState();
-  // hideSections();
-  // showHomePage();
+  hideSections();
+  showHomePage();
   document
     .getElementById("user-menu")
     .addEventListener("click", toggleUserMenu);
@@ -29,6 +32,10 @@ window.onload = function () {
   document
     .getElementById("sign-in-text")
     .addEventListener("click", showLoginPage);
+  document
+    .getElementById("save-username")
+    .addEventListener("click", saveUsername);
+  document.getElementById("save-email").addEventListener("click", saveEmail);
 };
 
 function clickNav(e) {
@@ -47,4 +54,5 @@ function clickNav(e) {
 function logoutUser() {
   localStorage.clear();
   checkUserState();
+  showHomePage();
 }

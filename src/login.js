@@ -1,6 +1,11 @@
 import { get } from "./data/api.js";
 import { showHomePage } from "./homePage.js";
-import { checkUserState, hideSections } from "./utils.js";
+import {
+  checkUserState,
+  hideSections,
+  showNotification,
+  toggleLoading,
+} from "./utils.js";
 let loginPage = document.querySelector(".login-page");
 
 export function showLoginPage() {
@@ -13,24 +18,35 @@ export function showLoginPage() {
 
 async function loginUser(e) {
   e.preventDefault();
+  toggleLoading(true, "Signing you in...");
   let formData = new FormData(e.target);
   let { email, password } = Object.fromEntries(formData.entries());
+  if (email == "" || password == "") {
+    return showNotification("All fields are required!", "red");
+  }
   let users = await get("/chatApp/users");
   let user = null;
-  for (const [userId, userInfo] of Object.entries(users)) {
+  let userId = null;
+  for (const [userIdd, userInfo] of Object.entries(users)) {
     if (userInfo.email === email && userInfo.password === password) {
       user = userInfo;
+      userId = userIdd;
     }
   }
+  toggleLoading(false);
   if (user != null) {
     localStorage.setItem(
       "userData",
       JSON.stringify({
         email: user.email,
         username: user.username,
+        password: user.password,
+        id: userId,
       })
     );
     checkUserState();
     showHomePage();
+  } else {
+    showNotification("Invalid username or password!", "red");
   }
 }
