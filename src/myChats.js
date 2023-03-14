@@ -24,6 +24,7 @@ document
   .addEventListener("keyup", function (e) {
     if (e.key === "Enter" || e.keyCode === 13) {
       sendMessage(e.target.value);
+      e.target.value = "";
     }
   });
 
@@ -35,6 +36,7 @@ export function showChatsPage() {
   hideSections();
   chatsPage.style.display = "flex";
   document.querySelector("main").replaceChildren(chatsPage);
+  document.querySelector(".chat-main").innerHTML = "";
   loadChats();
 }
 
@@ -160,6 +162,9 @@ async function loadChat(e) {
     let chatMessages = chatPage.querySelector(".chat-main");
     chatMessages.innerHTML = "";
     chatPage.querySelector(".chat-header span").textContent = chatInfo.name;
+    chatPage
+      .querySelector("#message-input")
+      .setAttribute("placeholder", `Message #${chatInfo.name}`);
     if (chatInfo.messages != undefined && chatInfo.messages.length > 0) {
       chatInfo.messages.forEach((m) => {
         let div = document.createElement("div");

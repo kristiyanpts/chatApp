@@ -25,7 +25,7 @@ let navs = {
 window.onload = function () {
   checkUserState();
   hideSections();
-  showChatsPage();
+  showHomePage();
   document
     .getElementById("user-menu")
     .addEventListener("click", toggleUserMenu);
