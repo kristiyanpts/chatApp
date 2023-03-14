@@ -5,14 +5,25 @@ export function checkUserState() {
   let userNavs = Array.from(document.getElementsByClassName("user"));
   let guestNavs = Array.from(document.getElementsByClassName("guest"));
   let profileName = document.getElementById("profile-name");
+  let userMenu = document.getElementById("user-menu");
   if (userData) {
     userNavs.forEach((u) => (u.style.display = "inline-block"));
     guestNavs.forEach((g) => (g.style.display = "none"));
     profileName.innerHTML = `Welcome, ${userData.username}`;
+    if (
+      userData.img != "No Avatar" &&
+      userData.img != "" &&
+      userData.img != undefined
+    ) {
+      userMenu.innerHTML = `<img class="header-image" src="${userData.img}"/>`;
+    } else {
+      userMenu.innerHTML = `<i class="fa-solid fa-user"></i>`;
+    }
   } else {
     userNavs.forEach((u) => (u.style.display = "none"));
     guestNavs.forEach((g) => (g.style.display = "inline-block"));
     profileName.innerHTML = "Welcome, Guest!";
+    userMenu.innerHTML = `<i class="fa-solid fa-user"></i>`;
   }
 }
 
@@ -41,7 +52,7 @@ export function showNotification(text, color) {
   notifElem.style.opacity = "1";
   setTimeout(() => {
     notifElem.style.opacity = "0";
-  }, 5000);
+  }, 3000);
 }
 
 export function toggleLoading(show, text) {
@@ -65,6 +76,7 @@ export async function reloadUserData() {
       email: user.email,
       username: user.username,
       password: user.password,
+      img: user.img,
       id: userData.id,
     })
   );

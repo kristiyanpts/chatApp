@@ -5,6 +5,7 @@ import {
   hideSections,
   showNotification,
   toggleLoading,
+  toggleUserMenu,
 } from "./utils.js";
 let loginPage = document.querySelector(".login-page");
 
@@ -41,6 +42,7 @@ async function loginUser(e) {
         email: user.email,
         username: user.username,
         password: user.password,
+        img: user.img,
         id: userId,
       })
     );
@@ -49,4 +51,11 @@ async function loginUser(e) {
   } else {
     showNotification("Invalid username or password!", "red");
   }
+}
+
+export function logoutUser() {
+  localStorage.clear();
+  toggleUserMenu();
+  checkUserState();
+  showHomePage();
 }

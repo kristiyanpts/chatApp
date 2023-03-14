@@ -1,13 +1,19 @@
 import { showHomePage } from "./homePage.js";
-import { showLoginPage } from "./login.js";
+import { logoutUser, showLoginPage } from "./login.js";
+import { showChatsPage } from "./myChats.js";
 import { showRegisterPage } from "./register.js";
 import { showSettingsPage } from "./settings.js";
-import { saveEmail, saveUsername } from "./update.js";
+import {
+  saveEmail,
+  saveUsername,
+  savePassword,
+  deleteAccount,
+} from "./update.js";
 import { checkUserState, hideSections, toggleUserMenu } from "./utils.js";
 
 let navs = {
   "/home": showHomePage,
-  // "/mychats": showMyChatsPage,
+  "/mychats": showChatsPage,
   // "/onetimechat": showOnetimeChatPage,
   // "/about": showAboutPage,
   "/login": showLoginPage,
@@ -19,7 +25,7 @@ let navs = {
 window.onload = function () {
   checkUserState();
   hideSections();
-  showHomePage();
+  showChatsPage();
   document
     .getElementById("user-menu")
     .addEventListener("click", toggleUserMenu);
@@ -36,6 +42,12 @@ window.onload = function () {
     .getElementById("save-username")
     .addEventListener("click", saveUsername);
   document.getElementById("save-email").addEventListener("click", saveEmail);
+  document
+    .getElementById("save-password")
+    .addEventListener("click", savePassword);
+  document
+    .getElementById("delete-account")
+    .addEventListener("click", deleteAccount);
 };
 
 function clickNav(e) {
@@ -49,10 +61,4 @@ function clickNav(e) {
       navs[href]();
     }
   }
-}
-
-function logoutUser() {
-  localStorage.clear();
-  checkUserState();
-  showHomePage();
 }

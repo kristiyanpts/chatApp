@@ -1,4 +1,4 @@
-import { hideSections } from "./utils.js";
+import { hideSections, toggleUserMenu } from "./utils.js";
 let settingsPage = document.querySelector(".settings-page");
 let settingsOptions = Array.from(document.querySelectorAll(".settings-option"));
 let menuOptions = Array.from(document.querySelectorAll(".menu-option"));
@@ -20,6 +20,7 @@ export function showSettingsPage() {
   menuOptions[0].classList.add("settings-selected");
   menuOptions.forEach((o) => o.addEventListener("click", selectOption));
   loadUserData();
+  toggleUserMenu();
 }
 
 function selectOption(e) {
