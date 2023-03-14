@@ -436,6 +436,7 @@ a:active {
   font-size: 20px;
   transition: 0.5s opacity;
   opacity: 0;
+  z-index: 2;
 }
 
 .loader {
@@ -729,6 +730,7 @@ a:active {
   transform: translateY(-50%);
   font-size: 20px;
   cursor: pointer;
+  z-index: 3;
 }
 
 .input-field input {
@@ -743,4 +745,98 @@ a:active {
   background-color: transparent;
   color: white;
   font-size: 15px;
+}
+
+.emoji-menu {
+  display: none;
+  position: absolute;
+  z-index: 2;
+  bottom: 7.5vh;
+  right: 2vh;
+}
+
+.chat-manager {
+  width: 100%;
+  height: 9vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1vh;
+}
+
+.action-chat {
+  position: relative;
+  width: 13vh;
+  height: 5vh;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  background-color: #344459;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.action-chat:hover {
+  color: #344459;
+  background-color: white;
+}
+
+.action-chat i {
+  position: absolute;
+  right: 1vh;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.chat-menu {
+  position: absolute;
+  width: 14%;
+  left: 0.5%;
+  height: 20vh;
+  background-color: #344459;
+  bottom: 8vh;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  flex-direction: column;
+  gap: 2vh;
+  border-radius: 10px;
+}
+
+.chat-menu input {
+  width: 80%;
+  height: 3vh;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  color: white;
+  border-bottom: 2px solid gray;
+  font-size: 15px;
+}
+
+.chat-menu button {
+  width: 80%;
+  height: 3vh;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  color: white;
+  background-color: #253140;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.chat-menu button:hover {
+  color: #253140;
+  background-color: white;
+}
+
+.chat-menu span {
+  position: absolute;
+  top: 1vh;
+  font-size: 20px;
 }

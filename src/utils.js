@@ -77,6 +77,7 @@ export async function reloadUserData() {
       username: user.username,
       password: user.password,
       img: user.img,
+      chats: user.chats,
       id: userData.id,
     })
   );

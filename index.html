@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/style/main.css" />
-    <script src="/src/app.js" type="module"></script>
+    <link rel="stylesheet" href="style/main.css" />
+    <script src="src/app.js" type="module"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
@@ -13,6 +13,10 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"
+    ></script>
     <title>Chat App</title>
   </head>
   <body>
@@ -56,6 +60,8 @@
         <span></span>
       </div>
     </div>
+
+    <emoji-picker class="emoji-menu"></emoji-picker>
 
     <main></main>
 
@@ -261,6 +267,23 @@
     </sector>
 
     <sector class="chats-page">
+      <div class="chat-menu">
+        <span>Join Chat</span>
+        <input
+          type="text"
+          name="chat-name"
+          id="chat-name"
+          placeholder="Chat Name..."
+        />
+        <input
+          type="pass"
+          name="chat-pass"
+          id="chat-pass"
+          placeholder="Chat Password..."
+        />
+        <button id="chat-submit">Join</button>
+      </div>
+
       <div class="my-chats">
         <div class="chats-header">My Chats</div>
         <div class="chats">
@@ -270,6 +293,14 @@
           <div class="chat-option">
             <i class="fa-solid fa-hashtag"></i> <span>Test Chat</span>
           </div>
+        </div>
+        <div class="chat-manager">
+          <button class="action-chat">
+            Join <i class="fa-solid fa-right-to-bracket"></i>
+          </button>
+          <button class="action-chat">
+            Create <i class="fa-solid fa-plus"></i>
+          </button>
         </div>
       </div>
       <div class="chat-page">
@@ -453,7 +484,7 @@
               id="message-input"
               placeholder="Message #Test-Chat"
             />
-            <i class="fa-solid fa-face-smile add-emoji"></i>
+            <i class="fa-solid fa-face-smile add-emoji" id="add-emoji"></i>
           </div>
         </div>
       </div>
