@@ -1,5 +1,6 @@
 import { get } from "./data/api.js";
 import { showHomePage } from "./homePage.js";
+import page from "../node_modules/page/page.mjs";
 import {
   checkUserState,
   hideSections,
@@ -48,7 +49,7 @@ async function loginUser(e) {
       })
     );
     checkUserState();
-    showHomePage();
+    page.redirect("/");
   } else {
     showNotification("Invalid username or password!", "red");
   }
@@ -58,5 +59,5 @@ export function logoutUser() {
   localStorage.clear();
   toggleUserMenu();
   checkUserState();
-  showHomePage();
+  page.redirect("/");
 }

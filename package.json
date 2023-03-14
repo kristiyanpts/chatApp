@@ -1,0 +1,23 @@
+{
+  "name": "chatapp",
+  "version": "1.0.0",
+  "description": "This is my personal project. I have been working on it for some time now and it is still work in progress. You can find a preview [here](https://krisdevbg.github.io/chatApp/). It is still not finished so do not expect full functionality.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KrisDevBG/chatApp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KrisDevBG/chatApp/issues"
+  },
+  "homepage": "https://github.com/KrisDevBG/chatApp#readme",
+  "dependencies": {
+    "page": "^1.11.6"
+  }
+}

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style/main.css" />
-    <script src="src/app.js" type="module"></script>
+    <script src="/src/app.js" type="module"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
@@ -21,7 +21,7 @@
   </head>
   <body>
     <div class="page-header">
-      <a class="header-option" href="/home">Home</a>
+      <a class="header-option" href="/">Home</a>
       <a class="header-option user" href="/mychats">My Chats</a>
       <a class="header-option user" href="/onetimechat">One-Time Chat</a>
       <a class="header-option" href="/about">About</a>
@@ -331,6 +331,11 @@
           </div>
         </div>
       </div>
+    </sector>
+
+    <sector class="error-page">
+      <div class="err-code">404</div>
+      <div class="err-msg">Page not found!</div>
     </sector>
   </body>
 </html>

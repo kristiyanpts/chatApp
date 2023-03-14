@@ -4,5 +4,5 @@ let homePage = document.querySelector(".home-page");
 export function showHomePage() {
   hideSections();
   homePage.style.display = "block";
-  document.querySelector("main").replaceChildren(homePage);
+  document.querySelector("main").innerHTML = homePage;
 }

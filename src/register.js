@@ -1,6 +1,7 @@
 import { post } from "./data/api.js";
 import { showHomePage } from "./homePage.js";
 import { checkUserState, hideSections, toggleLoading } from "./utils.js";
+import page from "../node_modules/page/page.mjs";
 let registerPage = document.querySelector(".register-page");
 
 export function showRegisterPage() {
@@ -46,6 +47,6 @@ async function registerUser(e) {
     })
   );
   checkUserState();
-  showHomePage();
+  page.redirect("/");
   toggleLoading(false);
 }
