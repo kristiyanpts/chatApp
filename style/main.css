@@ -569,6 +569,11 @@ a:active {
   color: white;
 }
 
+.selected-chat {
+  background-color: #344459;
+  color: white;
+}
+
 .chat-option i {
   position: absolute;
   top: 50%;

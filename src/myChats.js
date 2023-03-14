@@ -17,7 +17,17 @@ Array.from(document.querySelectorAll(".action-chat")).forEach((a) =>
 );
 document.getElementById("chat-submit").addEventListener("click", actionChat);
 
-chats.addEventListener("click", loadChat);
+chats.addEventListener("click", (e) => {
+  Array.from(document.querySelectorAll(".chat-option")).forEach((c) =>
+    c.classList.remove("selected-chat")
+  );
+  if (e.target.getAttribute("data-id") != null) {
+    e.target.classList.add("selected-chat");
+  } else {
+    e.target.parentElement.classList.add("selected-chat");
+  }
+  loadChat(e);
+});
 
 document
   .getElementById("message-input")
