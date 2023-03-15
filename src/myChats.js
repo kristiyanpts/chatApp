@@ -1,5 +1,10 @@
-import { get, post, put } from "./data/api.js";
-import { hideSections, reloadUserData, showNotification } from "./utils.js";
+import { del, get, post, put } from "./data/api.js";
+import {
+  hideSections,
+  reloadUserData,
+  showNotification,
+  toggleLoading,
+} from "./utils.js";
 import page from "../node_modules/page/page.mjs";
 let chatsPage = document.querySelector(".chats-page");
 let chats = document.querySelector(".chats");
@@ -19,12 +24,15 @@ Array.from(document.querySelectorAll(".action-chat")).forEach((a) =>
 document.getElementById("chat-submit").addEventListener("click", actionChat);
 
 chats.addEventListener("click", (e) => {
-  Array.from(document.querySelectorAll(".chat-option")).forEach((c) =>
-    c.classList.remove("selected-chat")
-  );
-  if (e.target.getAttribute("data-id") != null) {
+  if (e.target.classList.contains("chat-option")) {
+    Array.from(document.querySelectorAll(".chat-option")).forEach((c) =>
+      c.classList.remove("selected-chat")
+    );
     e.target.classList.add("selected-chat");
-  } else {
+  } else if (e.target.parentElement.classList.contains("chat-option")) {
+    Array.from(document.querySelectorAll(".chat-option")).forEach((c) =>
+      c.classList.remove("selected-chat")
+    );
     e.target.parentElement.classList.add("selected-chat");
   }
   loadChat(e);
@@ -85,22 +93,33 @@ function toggleChatMenu(e) {
 async function loadChats() {
   let userData = JSON.parse(localStorage.getItem("userData"));
   let user = await get(`/chatApp/users/${userData.id}`);
+  toggleLoading(true, "Gettings your chats...");
   chats.innerHTML = "";
   if (user.chats != undefined && user.chats.length > 0) {
     user.chats.forEach(async (c) => {
       let chatInfo = await get(`/chatApp/chats/${c}`);
-      let div = document.createElement("div");
-      div.setAttribute("class", "chat-option");
-      div.setAttribute("data-id", c);
-      div.innerHTML = `
-      <i class="fa-solid fa-hashtag left-items"></i> <span>${chatInfo.name}</span>
-      `;
-      if (userData.id == chatInfo.ownerId)
-        div.innerHTML +=
-          '<i class="fa-solid fa-gear right-items" style="right: 3vh!important"></i> <i class="fa-solid fa-trash right-items delete"></i>';
-      chats.appendChild(div);
+      if (chatInfo != null) {
+        console.log(chatInfo);
+        let div = document.createElement("div");
+        div.setAttribute("class", "chat-option");
+        div.setAttribute("data-id", c);
+        div.innerHTML = `
+        <i class="fa-solid fa-hashtag left-items"></i> <span>${chatInfo.name}</span>
+        `;
+        if (userData.id == chatInfo.ownerId) {
+          div.innerHTML +=
+            '<i class="fa-solid fa-gear right-items" style="right: 3vh!important"></i> <i class="fa-solid fa-trash right-items delete"></i>';
+          div.querySelector(".delete").addEventListener("click", deleteChat);
+        } else {
+          div.innerHTML +=
+            '<i class="fa-solid fa-right-from-bracket right-items leave"></i>';
+          div.querySelector(".leave").addEventListener("click", leaveChat);
+        }
+        chats.appendChild(div);
+      }
     });
   }
+  toggleLoading(false);
 }
 
 function actionChat(e) {
@@ -132,6 +151,7 @@ async function createChat() {
     ownerId: userData.id,
     messages: [],
   });
+  loadChats();
   return showNotification("Chat created successfully.", "green");
 }
 
@@ -146,17 +166,22 @@ async function joinChat() {
   for (const [chatId, chatInfo] of Object.entries(currentChats)) {
     if (chatInfo.name == chatName && chatInfo.password == chatPass) {
       let newChats = userData.chats || [];
-      newChats.push(chatId);
-      await put(`/chatApp/users/${userData.id}`, {
-        email: userData.email,
-        username: userData.username,
-        password: userData.password,
-        img: userData.img,
-        id: userData.id,
-        chats: newChats,
-      });
-      reloadUserData();
-      return showNotification("Successfully joined chat.", "green");
+      if (!newChats.includes(chatId)) {
+        newChats.push(chatId);
+        await put(`/chatApp/users/${userData.id}`, {
+          email: userData.email,
+          username: userData.username,
+          password: userData.password,
+          img: userData.img,
+          id: userData.id,
+          chats: newChats,
+        });
+        reloadUserData();
+        loadChats();
+        return showNotification("Successfully joined chat.", "green");
+      } else {
+        return showNotification("You are already in this chat.", "red");
+      }
     }
   }
 
@@ -174,6 +199,7 @@ async function loadChat(e, newId) {
   }
   if (newId) id = newId;
 
+  let userData = JSON.parse(localStorage.getItem("userData"));
   if (id != null) {
     let chatPage = document.querySelector(".chat-page");
     chatPage.setAttribute("data-id", id);
@@ -202,6 +228,9 @@ async function loadChat(e, newId) {
                   <div class="message">${m.content}</div>
               </div>
         `;
+        if (m.senderId && m.senderId == userData.id) {
+          div.addEventListener("contextmenu", openContext);
+        }
         chatMessages.appendChild(div);
       });
       //   var elem = document.querySelector(".chat-main");
@@ -218,6 +247,7 @@ async function sendMessage(msg) {
     let userData = JSON.parse(localStorage.getItem("userData"));
     let chatInfo = await get(`/chatApp/chats/${chatId}`);
     let msgData = {
+      senderId: userData.id,
       senderImage: userData.img,
       senderName: userData.username,
       sendDate: new Date(),
@@ -238,3 +268,69 @@ async function sendMessage(msg) {
 setInterval(() => {
   loadChat();
 }, 1000);
+
+async function deleteChat(e) {
+  let chatId = e.target.parentElement.getAttribute("data-id");
+  await del(`/chatApp/chats/${chatId}`);
+  showNotification("Chat deleted.", "green");
+}
+
+async function leaveChat(e) {
+  let chatId = e.target.parentElement.getAttribute("data-id");
+  let userData = JSON.parse(localStorage.getItem("userData"));
+  userData.chats.splice(userData.chats.indexOf(chatId), 1);
+  await put(`/chatApp/users/${userData.id}`, {
+    email: userData.email,
+    password: userData.password,
+    id: userData.id,
+    chats: userData.chats,
+    img: userData.img,
+    username: userData.username,
+  });
+  reloadUserData();
+  loadChats();
+  showNotification("Successfully left chat - " + chatId);
+}
+
+function openContext(event) {
+  event.preventDefault();
+  document.querySelector(".message-menu").style.display = "flex";
+  document.querySelector(".message-menu").style.top = mouseY(event) + "px";
+  document.querySelector(".message-menu").style.left = mouseX(event) + "px";
+
+  window.event.returnValue = false;
+}
+
+function mouseX(evt) {
+  if (evt.pageX) {
+    return evt.pageX;
+  } else if (evt.clientX) {
+    return (
+      evt.clientX +
+      (document.documentElement.scrollLeft
+        ? document.documentElement.scrollLeft
+        : document.body.scrollLeft)
+    );
+  } else {
+    return null;
+  }
+}
+
+function mouseY(evt) {
+  if (evt.pageY) {
+    return evt.pageY - 30;
+  } else if (evt.clientY) {
+    return (
+      evt.clientY +
+      (document.documentElement.scrollTop
+        ? document.documentElement.scrollTop
+        : document.body.scrollTop)
+    );
+  } else {
+    return null;
+  }
+}
+
+$(document).bind("click", function (event) {
+  document.querySelector(".message-menu").style.display = "none";
+});

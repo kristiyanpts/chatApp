@@ -504,6 +504,7 @@ a:active {
   z-index: 2;
   flex-direction: column;
   gap: 5vh;
+  z-index: 1;
 }
 
 .loading-page span {
@@ -590,7 +591,7 @@ a:active {
 }
 
 .right-items:hover {
-  color: #253140;
+  color: lightblue;
 }
 
 .delete:hover {
@@ -883,4 +884,39 @@ a:active {
 .err-msg {
   position: relative;
   font-size: 50px;
+}
+
+.message-menu {
+  position: absolute;
+  top: 5vh;
+  right: 5vh;
+  width: 20vh;
+  height: 15vh;
+  background-color: #253140;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  gap: 2vh;
+}
+
+.mm-option {
+  position: relative;
+  width: 80%;
+  height: 5vh;
+  background-color: #344459;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  font-size: 20px;
+  transition: 0.2s;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.mm-option:hover {
+  color: #344459;
+  background-color: white;
 }
