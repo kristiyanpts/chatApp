@@ -574,11 +574,27 @@ a:active {
   color: white;
 }
 
-.chat-option i {
+.left-items {
   position: absolute;
   top: 50%;
   left: 1vh;
   transform: translateY(-50%);
+}
+
+.right-items {
+  position: absolute;
+  top: 50%;
+  right: 1vh;
+  transform: translateY(-50%);
+  transition: 0.2s;
+}
+
+.right-items:hover {
+  color: #253140;
+}
+
+.delete:hover {
+  color: red;
 }
 
 .chat-option span {

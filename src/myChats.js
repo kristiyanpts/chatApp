@@ -1,5 +1,6 @@
 import { get, post, put } from "./data/api.js";
 import { hideSections, reloadUserData, showNotification } from "./utils.js";
+import page from "../node_modules/page/page.mjs";
 let chatsPage = document.querySelector(".chats-page");
 let chats = document.querySelector(".chats");
 
@@ -92,8 +93,11 @@ async function loadChats() {
       div.setAttribute("class", "chat-option");
       div.setAttribute("data-id", c);
       div.innerHTML = `
-      <i class="fa-solid fa-hashtag"></i> <span>${chatInfo.name}</span>
+      <i class="fa-solid fa-hashtag left-items"></i> <span>${chatInfo.name}</span>
       `;
+      if (userData.id == chatInfo.ownerId)
+        div.innerHTML +=
+          '<i class="fa-solid fa-gear right-items" style="right: 3vh!important"></i> <i class="fa-solid fa-trash right-items delete"></i>';
       chats.appendChild(div);
     });
   }
@@ -108,20 +112,24 @@ function actionChat(e) {
 }
 
 async function createChat() {
+  let userData = JSON.parse(localStorage.getItem("userData"));
   let chatName = document.getElementById("chat-name").value;
   let chatPass = document.getElementById("chat-pass").value;
   if (chatName == "" || chatPass == "") {
     return showNotification("All fields are required!", "red");
   }
   let currentChats = await get("/chatApp/chats");
-  for (const [chatId, chatInfo] of Object.entries(currentChats)) {
-    if (chatInfo.name == chatName && chatInfo.password == chatPass) {
-      return showNotification("Room already exists.", "red");
+  if (currentChats != undefined) {
+    for (const [chatId, chatInfo] of Object.entries(currentChats)) {
+      if (chatInfo.name == chatName && chatInfo.password == chatPass) {
+        return showNotification("Room already exists.", "red");
+      }
     }
   }
   await post("/chatApp/chats", {
     name: chatName,
     password: chatPass,
+    ownerId: userData.id,
     messages: [],
   });
   return showNotification("Chat created successfully.", "green");
@@ -155,7 +163,7 @@ async function joinChat() {
   return showNotification("Chat not found.", "red");
 }
 
-async function loadChat(e) {
+async function loadChat(e, newId) {
   let id = null;
   if (e != undefined) {
     id =
@@ -164,6 +172,7 @@ async function loadChat(e) {
   } else {
     id = document.querySelector(".chat-page").getAttribute("data-id");
   }
+  if (newId) id = newId;
 
   if (id != null) {
     let chatPage = document.querySelector(".chat-page");
@@ -219,6 +228,7 @@ async function sendMessage(msg) {
     await put(`/chatApp/chats/${chatId}`, {
       name: chatInfo.name,
       password: chatInfo.password,
+      ownerId: chatInfo.ownerId,
       messages,
     });
     loadChat();
