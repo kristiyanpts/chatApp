@@ -587,7 +587,6 @@ a:active {
   top: 50%;
   right: 1vh;
   transform: translateY(-50%);
-  transition: 0.2s;
 }
 
 .right-items:hover {

@@ -108,7 +108,7 @@ async function loadChats() {
         `;
         if (userData.id == chatInfo.ownerId) {
           div.innerHTML +=
-            '<i class="fa-solid fa-gear right-items" style="right: 3vh!important"></i> <i class="fa-solid fa-trash right-items delete"></i>';
+            '<i class="fa-solid fa-trash right-items delete"></i>';
           div.querySelector(".delete").addEventListener("click", deleteChat);
         } else {
           div.innerHTML +=
@@ -265,9 +265,9 @@ async function sendMessage(msg) {
   }
 }
 
-setInterval(() => {
-  loadChat();
-}, 1000);
+// setInterval(() => {
+//   loadChat();
+// }, 1000);
 
 async function deleteChat(e) {
   let chatId = e.target.parentElement.getAttribute("data-id");
