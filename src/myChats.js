@@ -112,7 +112,7 @@ async function loadChats() {
           div.querySelector(".delete").addEventListener("click", deleteChat);
         } else {
           div.innerHTML +=
-            '<i class="fa-solid fa-right-from-bracket right-items leave"></i>';
+            '<i class="fa-solid fa-right-from-bracket delete right-items leave"></i>';
           div.querySelector(".leave").addEventListener("click", leaveChat);
         }
         chats.appendChild(div);
@@ -225,7 +225,7 @@ async function loadChat(e, newId) {
                   <div class="sender">${
                     m.senderName
                   } <span>${sendDate.getDate()}/${sendDate.getMonth()}/${sendDate.getFullYear()} - ${sendDate.getHours()}:${sendDate.getMinutes()}</span></div>
-                  <div class="message">${m.content}</div>
+                  <div class="message"><span>${m.content}</span></div>
               </div>
         `;
         if (m.senderId && m.senderId == userData.id) {
@@ -293,12 +293,11 @@ async function leaveChat(e) {
 }
 
 function openContext(event) {
-  event.preventDefault();
-  document.querySelector(".message-menu").style.display = "flex";
-  document.querySelector(".message-menu").style.top = mouseY(event) + "px";
-  document.querySelector(".message-menu").style.left = mouseX(event) + "px";
-
-  window.event.returnValue = false;
+  // event.preventDefault();
+  // document.querySelector(".message-menu").style.display = "flex";
+  // document.querySelector(".message-menu").style.top = mouseY(event) + "px";
+  // document.querySelector(".message-menu").style.left = mouseX(event) + "px";
+  // window.event.returnValue = false;
 }
 
 function mouseX(evt) {

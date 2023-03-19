@@ -713,10 +713,19 @@ a:active {
 }
 
 .message {
+  position: absolute;
+  bottom: 0;
   width: 100%;
   height: 70%;
-  display: flex;
-  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.message span {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .chat-input {
@@ -815,7 +824,7 @@ a:active {
   position: absolute;
   width: 14%;
   left: 0.5%;
-  height: 20vh;
+  height: 22vh;
   background-color: #344459;
   bottom: 8vh;
   display: none;
@@ -828,6 +837,7 @@ a:active {
 }
 
 .chat-menu input {
+  position: relative;
   width: 80%;
   height: 3vh;
   outline: none;
@@ -836,9 +846,11 @@ a:active {
   color: white;
   border-bottom: 2px solid gray;
   font-size: 15px;
+  top: 2vh;
 }
 
 .chat-menu button {
+  position: relative;
   width: 80%;
   height: 3vh;
   outline: none;
@@ -849,6 +861,7 @@ a:active {
   background-color: #253140;
   cursor: pointer;
   transition: 0.3s;
+  top: 2vh;
 }
 
 .chat-menu button:hover {
@@ -918,4 +931,8 @@ a:active {
 .mm-option:hover {
   color: #344459;
   background-color: white;
+}
+
+#chat-submit {
+  height: 4vh;
 }
