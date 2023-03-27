@@ -207,7 +207,9 @@ a:active {
 
 .home-page {
   position: relative;
-  top: 5vh;
+  top: 3vh;
+  display: flex;
+  flex-direction: row;
 }
 
 .settings-page {
@@ -935,4 +937,60 @@ a:active {
 
 #chat-submit {
   height: 4vh;
+}
+
+.left-side {
+  top: 0;
+  position: relative;
+  width: 50%;
+  height: 95vh;
+}
+
+.main-text {
+  position: relative;
+  top: 20%;
+  left: 20%;
+  font-size: 150px;
+}
+
+.desc-text {
+  position: relative;
+  font-size: 40px;
+  top: 25%;
+  left: 20%;
+}
+
+.home-buttons {
+  position: relative;
+  top: 35%;
+  display: flex;
+  gap: 3vh;
+  left: 20%;
+}
+
+.home-buttons a {
+  width: 220px;
+  height: 70px;
+  border-radius: 50px;
+  border: none;
+  outline: none;
+  font-size: 20px;
+  background-color: #253140;
+  color: white;
+  transition: 0.3s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-buttons a:hover {
+  background-color: white;
+  color: #253140;
+}
+
+.chat-dog {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
