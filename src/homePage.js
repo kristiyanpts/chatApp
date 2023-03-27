@@ -1,8 +1,22 @@
-import { hideSections } from "./utils.js";
-let homePage = document.querySelector(".home-page");
+import { html } from "./lib.js";
 
-export function showHomePage() {
-  hideSections();
-  homePage.style.display = "flex";
-  document.querySelector("main").innerHTML = homePage;
+let homeTemplate = () => html`<sector class="home-page">
+  <div class="left-side">
+    <div class="main-text">
+      Have your <br />
+      best chat
+    </div>
+    <div class="desc-text">Fast. Easy. Unlimited Chats.</div>
+    <div class="home-buttons">
+      <a href="/register"><span>Try it for free</span></a>
+      <a href="/login"><span>Already a member?</span></a>
+    </div>
+  </div>
+  <div class="right-side">
+    <img src="/images/dog-chatting.png" alt="" class="chat-dog" />
+  </div>
+</sector>`;
+
+export function showHomePage(ctx) {
+  ctx.render(homeTemplate());
 }

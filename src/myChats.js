@@ -5,7 +5,6 @@ import {
   showNotification,
   toggleLoading,
 } from "./utils.js";
-import page from "../node_modules/page/page.mjs";
 let chatsPage = document.querySelector(".chats-page");
 let chats = document.querySelector(".chats");
 

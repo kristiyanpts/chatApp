@@ -31,7 +31,7 @@ let menuOpen = false;
 export function toggleUserMenu() {
   let menu = document.querySelector(".user-menu");
   if (!menuOpen) {
-    menu.style.display = "block";
+    menu.style.display = "flex";
     menuOpen = true;
   } else {
     menu.style.display = "none";
@@ -82,4 +82,26 @@ export async function reloadUserData() {
     })
   );
   checkUserState();
+}
+
+export function createSubmitHandler(callback) {
+  return function (event) {
+    event.preventDefault();
+    let formData = new FormData(event.target);
+    let data = Object.fromEntries(formData.entries());
+
+    callback(data);
+  };
+}
+
+export function getUserData() {
+  return JSON.parse(localStorage.getItem("userData"));
+}
+
+export function setUserData(userData) {
+  localStorage.setItem("userData", JSON.stringify(userData));
+}
+
+export function clearUserData() {
+  localStorage.removeItem("userData");
 }

@@ -21,32 +21,9 @@
     <title>Chat App</title>
   </head>
   <body>
-    <div class="page-header">
-      <a class="header-option" href="/">Home</a>
-      <a class="header-option user" href="/mychats">My Chats</a>
-      <a class="header-option user" href="/onetimechat">One-Time Chat</a>
-      <a class="header-option" href="/about">About</a>
+    <div class="page-header"></div>
 
-      <div class="header-option header-right" id="user-menu">
-        <i class="fa-solid fa-user"></i>
-      </div>
-    </div>
-
-    <div class="user-menu">
-      <div class="profile-name" id="profile-name">Welcome, Pesho!</div>
-      <a class="user-menu-option guest" href="/login">
-        <span>Sign In</span> <i class="fa-solid fa-right-to-bracket"></i>
-      </a>
-      <a class="user-menu-option guest" href="/register">
-        <span>Register</span> <i class="fa-solid fa-user-plus"></i>
-      </a>
-      <a class="user-menu-option user" href="/settings">
-        <span>Settings</span> <i class="fa-solid fa-gear"></i>
-      </a>
-      <a class="user-menu-option user" id="logout">
-        <span>Logout</span> <i class="fa-solid fa-right-from-bracket"></i>
-      </a>
-    </div>
+    <div class="user-menu"></div>
 
     <div class="notification" id="notification">
       <span>This is my notification!</span>
@@ -66,221 +43,11 @@
 
     <main></main>
 
-    <sector class="home-page">
-      <div class="left-side">
-        <div class="main-text">
-          Have your <br />
-          best chat
-        </div>
-        <div class="desc-text">Fast. Easy. Unlimited Chats.</div>
-        <div class="home-buttons">
-          <a href="/register"><span>Try it for free</span></a>
-          <a href="/login"><span>Already a member?</span></a>
-        </div>
-      </div>
-      <div class="right-side">
-        <img src="/images/dog-chatting.png" alt="" class="chat-dog" />
-      </div>
-    </sector>
+    <!-- 
 
-    <sector class="login-page">
-      <form id="login-form">
-        <h1>Sign In</h1>
-        <span>Having a profile is required to use the chat.</span>
-        <div class="single-input">
-          <span><i class="fas fa-user"></i></span>
-          <input type="email" name="email" placeholder="Email" />
-        </div>
-        <div class="single-input">
-          <span><i class="fas fa-unlock"></i></span>
-          <input type="password" name="password" placeholder="Password" />
-        </div>
+   
 
-        <div class="single-input submit-btn">
-          <input type="submit" value="Login" />
-        </div>
-        <span
-          >Don't have an account?
-          <a href="/register" id="register-text">Register</a></span
-        >
-      </form>
-    </sector>
-
-    <sector class="register-page">
-      <form id="register-form">
-        <h1>Register</h1>
-        <span>Having a profile is required to use the chat.</span>
-        <div class="single-input">
-          <span><i class="fas fa-user"></i></span>
-          <input type="email" name="email" placeholder="Email" />
-        </div>
-        <div class="single-input">
-          <span><i class="fas fa-user"></i></span>
-          <input type="text" name="username" placeholder="Username" />
-        </div>
-        <div class="single-input">
-          <span><i class="fas fa-unlock"></i></span>
-          <input type="password" name="password" placeholder="Password" />
-        </div>
-        <div class="single-input">
-          <span><i class="fas fa-unlock"></i></span>
-          <input
-            type="password"
-            name="repeatPassword"
-            placeholder="Repeat Password"
-          />
-        </div>
-
-        <div class="single-input submit-btn">
-          <input type="submit" value="Register" />
-        </div>
-        <span
-          >Already have an account?
-          <a href="/login" id="sign-in-text">Sign In</a></span
-        >
-      </form>
-    </sector>
-
-    <sector class="settings-page">
-      <div class="settings-nav">
-        <div class="s-nav-title">Account <br />Management</div>
-        <div class="s-nav-menu">
-          <div class="menu-option" href="/settings/username">
-            <i class="fa-solid fa-signature"></i> <span>username</span>
-          </div>
-          <div class="menu-option" href="/settings/pinformation">
-            <i class="fa-solid fa-user"></i>
-            <span>personal information</span>
-          </div>
-          <div class="menu-option" href="/settings/account">
-            <i class="fa-solid fa-key"></i>
-            <span>account sign-in</span>
-          </div>
-          <div class="menu-option" href="/settings/actions">
-            <i class="fa-solid fa-circle-exclamation"></i>
-            <span>account actions</span>
-          </div>
-        </div>
-      </div>
-      <div class="settings-blocks">
-        <div class="settings-option" id="username-option-page">
-          <div class="option-left">
-            <div class="left-title">Username</div>
-            <div class="left-desc">
-              Your username is used by other users to identify you.
-            </div>
-          </div>
-          <div class="option-right">
-            <input
-              type="text"
-              name="username"
-              id="settings-username"
-              class="settings-username"
-              placeholder="Username"
-              autocomplete="off"
-            />
-            <label for="username" class="username-label">Username</label>
-            <input
-              type="text"
-              name="avatar"
-              id="settings-avatar"
-              class="settings-username4"
-              placeholder="Avatar"
-              autocomplete="off"
-            />
-            <label for="avatar" class="username-4-label">Avatar</label>
-          </div>
-          <button class="save-changes" id="save-username">save changes</button>
-        </div>
-        <div class="settings-option" id="pinformation-option-page">
-          <div class="option-left">
-            <div class="left-title">Personal Information</div>
-            <div class="left-desc">
-              This information is private and will not be shared with other
-              users.
-            </div>
-          </div>
-          <div class="option-right">
-            <input
-              type="text"
-              name="email"
-              id="settings-email"
-              class="settings-username"
-              placeholder="Email"
-              autocomplete="off"
-            />
-            <label for="email" class="username-label">Email</label>
-          </div>
-          <button class="save-changes" id="save-email">save changes</button>
-        </div>
-        <div
-          class="settings-option"
-          style="height: 40%"
-          id="account-option-page"
-        >
-          <div class="option-left">
-            <div class="left-title">Account Sign-In</div>
-            <div class="left-desc">
-              We recommend that you periodically update your password to help
-              prevent unauthorized access to your account.
-            </div>
-          </div>
-          <div class="option-right">
-            <h2 align="center">Change Password</h2>
-            <input
-              type="password"
-              name="current-password"
-              id="settings-current-password"
-              class="settings-username"
-              placeholder="Current Password"
-              autocomplete="off"
-            />
-            <label for="current-password" class="username-label"
-              >Current Password</label
-            >
-            <input
-              type="password"
-              name="new-password"
-              id="settings-new-password"
-              class="settings-username2"
-              placeholder="New Password"
-              autocomplete="off"
-            />
-            <label for="new-password" class="username-2-label"
-              >New Password</label
-            >
-            <input
-              type="password"
-              name="repeat-new-password"
-              id="settings-repeat-new-password"
-              class="settings-username3"
-              placeholder="Repeat New Password"
-              autocomplete="off"
-            />
-            <label for="repeat-new-password" class="username-3-label"
-              >Repeat New Password</label
-            >
-          </div>
-          <button class="save-changes" id="save-password">save changes</button>
-        </div>
-        <div class="settings-option" id="account-actions-page">
-          <div class="option-left">
-            <div class="left-title">Account Actions</div>
-            <div class="left-desc">All available account actions.</div>
-          </div>
-          <div class="option-right">
-            <span
-              >Once you delete your account, it cannot be undone. Your account
-              will be gone forever. You can make a new account with same email
-              address once the old one is deleted.</span
-            >
-            <button class="delete-account" id="delete-account">
-              Delete Account
-            </button>
-          </div>
-        </div>
-      </div>
-    </sector>
+    
 
     <sector class="chats-page">
       <div class="chat-menu">
@@ -352,11 +119,11 @@
           </div>
         </div>
       </div>
-    </sector>
+    </sector> -->
 
-    <sector class="error-page">
+    <!-- <sector class="error-page">
       <div class="err-code">404</div>
       <div class="err-msg">Page not found!</div>
-    </sector>
+    </sector> -->
   </body>
 </html>

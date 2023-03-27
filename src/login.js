@@ -1,63 +1,39 @@
-import { get } from "./data/api.js";
-import { showHomePage } from "./homePage.js";
-import page from "../node_modules/page/page.mjs";
-import {
-  checkUserState,
-  hideSections,
-  showNotification,
-  toggleLoading,
-  toggleUserMenu,
-} from "./utils.js";
-let loginPage = document.querySelector(".login-page");
+import { loginUser } from "./data/user.js";
+import { html } from "./lib.js";
+import { createSubmitHandler, showNotification } from "./utils.js";
 
-export function showLoginPage() {
-  hideSections();
-  loginPage.style.display = "block";
-  document.querySelector("main").replaceChildren(loginPage);
-  let form = document.querySelector("#login-form");
-  form.addEventListener("submit", loginUser);
-}
+let loginTemplate = (onLogin) => html`<sector class="login-page">
+  <form @submit=${onLogin} id="login-form">
+    <h1>Sign In</h1>
+    <span>Having a profile is required to use the chat.</span>
+    <div class="single-input">
+      <span><i class="fas fa-user"></i></span>
+      <input type="email" name="email" placeholder="Email" />
+    </div>
+    <div class="single-input">
+      <span><i class="fas fa-unlock"></i></span>
+      <input type="password" name="password" placeholder="Password" />
+    </div>
 
-async function loginUser(e) {
-  e.preventDefault();
-  toggleLoading(true, "Signing you in...");
-  let formData = new FormData(e.target);
-  let { email, password } = Object.fromEntries(formData.entries());
-  if (email == "" || password == "") {
-    return showNotification("All fields are required!", "red");
-  }
-  let users = await get("/chatApp/users");
-  let user = null;
-  let userId = null;
-  for (const [userIdd, userInfo] of Object.entries(users)) {
-    if (userInfo.email === email && userInfo.password === password) {
-      user = userInfo;
-      userId = userIdd;
-    }
-  }
-  toggleLoading(false);
-  if (user != null) {
-    localStorage.setItem(
-      "userData",
-      JSON.stringify({
-        email: user.email,
-        username: user.username,
-        password: user.password,
-        img: user.img,
-        chats: user.chats,
-        id: userId,
-      })
-    );
-    checkUserState();
-    page.redirect("/");
-  } else {
-    showNotification("Invalid username or password!", "red");
-  }
-}
+    <div class="single-input submit-btn">
+      <input type="submit" value="Login" />
+    </div>
+    <span
+      >Don't have an account?
+      <a href="/register" id="register-text">Register</a></span
+    >
+  </form>
+</sector>`;
 
-export function logoutUser() {
-  localStorage.clear();
-  toggleUserMenu();
-  checkUserState();
-  page.redirect("/");
+export function showLoginPage(ctx) {
+  ctx.render(loginTemplate(createSubmitHandler(onLogin)));
+
+  async function onLogin({ email, password }) {
+    if (email == "" || password == "")
+      return showNotification("All fields are required.", "red");
+    let logged = await loginUser(email, password);
+    ctx.updateNav();
+    if (logged) return ctx.page.redirect("/");
+    return showNotification("Wrong email or password.", "red");
+  }
 }

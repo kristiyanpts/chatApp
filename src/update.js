@@ -1,5 +1,5 @@
 import { del, put } from "./data/api.js";
-import { logoutUser } from "./login.js";
+import { logoutUser } from "./data/user.js";
 import { reloadUserData, showNotification } from "./utils.js";
 
 export async function saveUsername() {

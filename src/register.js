@@ -1,52 +1,54 @@
-import { post } from "./data/api.js";
-import { showHomePage } from "./homePage.js";
-import { checkUserState, hideSections, toggleLoading } from "./utils.js";
-import page from "../node_modules/page/page.mjs";
-let registerPage = document.querySelector(".register-page");
+import { loginUser, registerUser } from "./data/user.js";
+import { html } from "./lib.js";
+import { createSubmitHandler, showNotification } from "./utils.js";
 
-export function showRegisterPage() {
-  hideSections();
-  registerPage.style.display = "block";
-  document.querySelector("main").replaceChildren(registerPage);
-  let form = document.querySelector("#register-form");
-  form.addEventListener("submit", registerUser);
-}
+let registerTemplate = (onRegister) => html` <sector class="register-page">
+  <form @submit=${onRegister} id="register-form">
+    <h1>Register</h1>
+    <span>Having a profile is required to use the chat.</span>
+    <div class="single-input">
+      <span><i class="fas fa-user"></i></span>
+      <input type="email" name="email" placeholder="Email" />
+    </div>
+    <div class="single-input">
+      <span><i class="fas fa-user"></i></span>
+      <input type="text" name="username" placeholder="Username" />
+    </div>
+    <div class="single-input">
+      <span><i class="fas fa-unlock"></i></span>
+      <input type="password" name="password" placeholder="Password" />
+    </div>
+    <div class="single-input">
+      <span><i class="fas fa-unlock"></i></span>
+      <input
+        type="password"
+        name="repeatPassword"
+        placeholder="Repeat Password"
+      />
+    </div>
 
-async function registerUser(e) {
-  e.preventDefault();
-  toggleLoading(true, "Trying to register your profile...");
-  let formData = new FormData(e.target);
-  let { email, username, password, repeatPassword } = Object.fromEntries(
-    formData.entries()
-  );
-  let regex = /([a-z0-9]+)@([a-z]+).([a-z]+)/g;
-  let emailValid = false;
-  if (regex.exec(email) !== null) {
-    emailValid = true;
+    <div class="single-input submit-btn">
+      <input type="submit" value="Register" />
+    </div>
+    <span
+      >Already have an account?
+      <a href="/login" id="sign-in-text">Sign In</a></span
+    >
+  </form>
+</sector>`;
+
+export function showRegisterPage(ctx) {
+  ctx.render(registerTemplate(createSubmitHandler(onRegister)));
+
+  async function onRegister({ email, username, password, repeatPassword }) {
+    if (email == "" || password == "" || username == "")
+      return showNotification("All fields are required.", "red");
+    if (password != repeatPassword)
+      return showNotification("Passwords do not match.", "red");
+    let regged = await registerUser(email, password, username);
+    if (regged) {
+      ctx.page.redirect("/");
+      ctx.updateNav();
+    }
   }
-  if (!emailValid) {
-    alert("Email is invalid. Format <text>@<source>.<domain>");
-    return;
-  }
-  if (password.length < 8) {
-    alert("Password must be at least 8 characters.");
-    return;
-  }
-  if (password != repeatPassword) {
-    alert("Passwords do not match.");
-    return;
-  }
-  let user = await post("/chatApp/users", { email, password, username });
-  localStorage.setItem(
-    "userData",
-    JSON.stringify({
-      email,
-      username,
-      password,
-      id: user.name,
-    })
-  );
-  checkUserState();
-  page.redirect("/");
-  toggleLoading(false);
 }
