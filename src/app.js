@@ -40,6 +40,7 @@ page.start();
 function decorateContenxt(ctx, next) {
   ctx.render = renderMain;
   ctx.updateNav = showNav;
+  showNav();
   next();
 }
 
