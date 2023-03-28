@@ -1,6 +1,6 @@
 import { showHomePage } from "./homePage.js";
 import { showLoginPage } from "./login.js";
-// import { showChatsPage } from "./myChats.js";
+import { showChatsPage } from "./myChats.js";
 import { showRegisterPage } from "./register.js";
 import { selectOption, showSettingsPage } from "./settings.js";
 import page from "../node_modules/page/page.mjs";
@@ -14,16 +14,16 @@ import page from "../node_modules/page/page.mjs";
 import { render } from "./lib.js";
 import { showNav } from "./nav.js";
 import { showPage } from "./settings.js";
+import { showNotification } from "./utils.js";
 
 let main = document.querySelector("main");
 
 page(decorateContenxt);
 page("/index.html", "/");
 page("/", showHomePage);
-// page("/mychats", showChatsPage);
+page("/mychats", showChatsPage);
 page("/login", showLoginPage);
 page("/register", showRegisterPage);
-// page("/login", showRegisterPage);
 page("/settings", showSettingsPage);
 // page("*", showErrorPage);
 
@@ -75,3 +75,7 @@ function settingsPage(e, page) {
 //     .getElementById("delete-account")
 //     .addEventListener("click", deleteAccount);
 // };
+
+window.api = function () {
+  showNotification("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "red");
+};

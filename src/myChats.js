@@ -1,28 +1,148 @@
 import { del, get, post, put } from "./data/api.js";
 import {
+  getUserData,
   hideSections,
   reloadUserData,
   showNotification,
   toggleLoading,
 } from "./utils.js";
-let chatsPage = document.querySelector(".chats-page");
-let chats = document.querySelector(".chats");
+import { html, page } from "./lib.js";
 
-document.getElementById("add-emoji").addEventListener("click", toggleEmojiMenu);
-document
-  .querySelector("emoji-picker")
-  .addEventListener(
-    "emoji-click",
-    (event) =>
-      (document.querySelector("#message-input").value += event.detail.unicode)
-  );
+let chatsTemplate = (
+  chats,
+  chatsNames,
+  user
+) => html`<sector class="chats-page">
+  <div class="chat-menu">
+    <span>Join Chat</span>
+    <input
+      type="text"
+      name="chat-name"
+      id="chat-name"
+      placeholder="Chat Name..."
+    />
+    <input
+      type="password"
+      name="chat-pass"
+      id="chat-pass"
+      placeholder="Chat Password..."
+    />
+    <button @click=${actionChat}  id="chat-submit">Join</@button>
+  </div>
 
-Array.from(document.querySelectorAll(".action-chat")).forEach((a) =>
-  a.addEventListener("click", toggleChatMenu)
-);
-document.getElementById("chat-submit").addEventListener("click", actionChat);
+  <div class="message-menu">
+    <div class="mm-option">Edit</div>
+    <div class="mm-option">Delete</div>
+  </div>
 
-chats.addEventListener("click", (e) => {
+  <div class="my-chats">
+    <div class="chats-header">My Chats</div>
+    <div @click=${chatsClick} class="chats">
+      ${
+        chats.length > 0
+          ? chats.map((e) =>
+              chatTemplate(e, user, chatsNames[chats.indexOf(e)])
+            )
+          : null
+      }
+    </div>
+    <div class="chat-manager">
+      <button @click=${toggleChatMenu} class="action-chat">
+        Join <i class="fa-solid fa-right-to-bracket"></i>
+      </button>
+      <button @click=${toggleChatMenu} class="action-chat">
+        Create <i class="fa-solid fa-plus"></i>
+      </button>
+    </div>
+  </div>
+  <div class="chat-page">
+    <div class="chat-header">
+      <i class="fa-solid fa-hashtag"></i>
+      <span>Select Chat</span>
+    </div>
+    <div class="chat-main"></div>
+    <div class="chat-input">
+      <div class="input-field">
+        <i
+          class="fa-solid fa-circle-plus add-file"
+          @click=${() => document.getElementById("file-input").click()}
+        ></i>
+        <input id="file-input" type="file" name="name" style="display: none" />
+        <input
+          type="text"
+          name="message"
+          id="message-input"
+          @keyup=${(e) => {
+            if (e.key === "Enter" || e.keyCode === 13) {
+              sendMessage(e.target.value);
+              e.target.value = "";
+            }
+          }}
+          placeholder="Select a chat to message in..."
+        />
+        <i
+          @click=${toggleEmojiMenu}
+          class="fa-solid fa-face-smile add-emoji"
+          id="add-emoji"
+        ></i>
+      </div>
+    </div>
+  </div>
+</sector>`;
+
+let chatTemplate = (chat, user, chatId) => {
+  return html`<div data-id=${chatId} class="chat-option">
+    <i class="fa-solid fa-hashtag left-items"></i> <span>${chat.name}</span>
+    ${user && user.id == chat.ownerId
+      ? html`<i
+          @click=${deleteChat}
+          class="fa-solid fa-trash right-items delete"
+        ></i>`
+      : html`<i
+          @click=${leaveChat}
+          class="fa-solid fa-right-from-bracket delete right-items leave"
+        ></i>`}
+  </div>`;
+};
+
+async function getChats(chats) {
+  let newChats = [];
+  for (const chat of chats) {
+    let chatInfo = await get(`/chatApp/chats/${chat}`);
+    chatInfo ? newChats.push(chatInfo) : null;
+  }
+  return newChats;
+}
+
+export async function showChatsPage(ctx) {
+  let userData = getUserData();
+  let user = await get(`/chatApp/users/${userData.id}`);
+  let userChatsNames = user.chats || [];
+  let userChats = await getChats(userChatsNames);
+  console.log(userChats);
+  ctx.render(chatsTemplate(userChats, userChatsNames, user));
+
+  $(document).bind("click", function (event) {
+    document.querySelector(".message-menu").style.display = "none";
+  });
+
+  document
+    .querySelector("emoji-picker")
+    .removeEventListener("emoji-click", emojiClick);
+  document
+    .querySelector("emoji-picker")
+    .addEventListener("emoji-click", emojiClick);
+}
+
+function emojiClick(event) {
+  document.querySelector("#message-input").value += event.detail.unicode;
+}
+
+//   document.getElementById("file-input").addEventListener("change", (e) => {
+//     // TODO: Implement file loading function
+//   });
+
+function chatsClick(e) {
   if (e.target.classList.contains("chat-option")) {
     Array.from(document.querySelectorAll(".chat-option")).forEach((c) =>
       c.classList.remove("selected-chat")
@@ -35,27 +155,6 @@ chats.addEventListener("click", (e) => {
     e.target.parentElement.classList.add("selected-chat");
   }
   loadChat(e);
-});
-
-document
-  .getElementById("message-input")
-  .addEventListener("keyup", function (e) {
-    if (e.key === "Enter" || e.keyCode === 13) {
-      sendMessage(e.target.value);
-      e.target.value = "";
-    }
-  });
-
-//   document.getElementById("file-input").addEventListener("change", (e) => {
-//     // TODO: Implement file loading function
-//   });
-
-export function showChatsPage() {
-  hideSections();
-  chatsPage.style.display = "flex";
-  document.querySelector("main").replaceChildren(chatsPage);
-  document.querySelector(".chat-main").innerHTML = "";
-  loadChats();
 }
 
 let emojiShown = false;
@@ -89,38 +188,6 @@ function toggleChatMenu(e) {
   }
 }
 
-async function loadChats() {
-  let userData = JSON.parse(localStorage.getItem("userData"));
-  let user = await get(`/chatApp/users/${userData.id}`);
-  toggleLoading(true, "Gettings your chats...");
-  chats.innerHTML = "";
-  if (user.chats != undefined && user.chats.length > 0) {
-    user.chats.forEach(async (c) => {
-      let chatInfo = await get(`/chatApp/chats/${c}`);
-      if (chatInfo != null) {
-        console.log(chatInfo);
-        let div = document.createElement("div");
-        div.setAttribute("class", "chat-option");
-        div.setAttribute("data-id", c);
-        div.innerHTML = `
-        <i class="fa-solid fa-hashtag left-items"></i> <span>${chatInfo.name}</span>
-        `;
-        if (userData.id == chatInfo.ownerId) {
-          div.innerHTML +=
-            '<i class="fa-solid fa-trash right-items delete"></i>';
-          div.querySelector(".delete").addEventListener("click", deleteChat);
-        } else {
-          div.innerHTML +=
-            '<i class="fa-solid fa-right-from-bracket delete right-items leave"></i>';
-          div.querySelector(".leave").addEventListener("click", leaveChat);
-        }
-        chats.appendChild(div);
-      }
-    });
-  }
-  toggleLoading(false);
-}
-
 function actionChat(e) {
   if (e.target.textContent == "Join") {
     joinChat();
@@ -150,7 +217,7 @@ async function createChat() {
     ownerId: userData.id,
     messages: [],
   });
-  loadChats();
+  refreshChats();
   return showNotification("Chat created successfully.", "green");
 }
 
@@ -176,7 +243,7 @@ async function joinChat() {
           chats: newChats,
         });
         reloadUserData();
-        loadChats();
+        refreshChats();
         return showNotification("Successfully joined chat.", "green");
       } else {
         return showNotification("You are already in this chat.", "red");
@@ -232,8 +299,6 @@ async function loadChat(e, newId) {
         }
         chatMessages.appendChild(div);
       });
-      //   var elem = document.querySelector(".chat-main");
-      //   elem.scrollTop = elem.scrollHeight;
     }
   }
 }
@@ -264,13 +329,10 @@ async function sendMessage(msg) {
   }
 }
 
-// setInterval(() => {
-//   loadChat();
-// }, 1000);
-
 async function deleteChat(e) {
   let chatId = e.target.parentElement.getAttribute("data-id");
   await del(`/chatApp/chats/${chatId}`);
+  refreshChats();
   showNotification("Chat deleted.", "green");
 }
 
@@ -287,16 +349,16 @@ async function leaveChat(e) {
     username: userData.username,
   });
   reloadUserData();
-  loadChats();
+  refreshChats();
   showNotification("Successfully left chat - " + chatId);
 }
 
 function openContext(event) {
-  // event.preventDefault();
-  // document.querySelector(".message-menu").style.display = "flex";
-  // document.querySelector(".message-menu").style.top = mouseY(event) + "px";
-  // document.querySelector(".message-menu").style.left = mouseX(event) + "px";
-  // window.event.returnValue = false;
+  event.preventDefault();
+  document.querySelector(".message-menu").style.display = "flex";
+  document.querySelector(".message-menu").style.top = mouseY(event) + "px";
+  document.querySelector(".message-menu").style.left = mouseX(event) + "px";
+  window.event.returnValue = false;
 }
 
 function mouseX(evt) {
@@ -316,7 +378,7 @@ function mouseX(evt) {
 
 function mouseY(evt) {
   if (evt.pageY) {
-    return evt.pageY - 30;
+    return evt.pageY - 45;
   } else if (evt.clientY) {
     return (
       evt.clientY +
@@ -329,6 +391,6 @@ function mouseY(evt) {
   }
 }
 
-$(document).bind("click", function (event) {
-  document.querySelector(".message-menu").style.display = "none";
-});
+function refreshChats() {
+  page.redirect("/mychats");
+}

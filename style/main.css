@@ -429,7 +429,8 @@ a:active {
   position: absolute;
   bottom: 2vh;
   right: 2vh;
-  width: 30vh;
+  width: fit-content;
+  height: fit-content;
   height: 5vh;
   background-color: red;
   display: flex;
@@ -439,7 +440,7 @@ a:active {
   font-size: 20px;
   transition: 0.5s opacity;
   opacity: 0;
-  z-index: 2;
+  z-index: 5;
 }
 
 .loader {
@@ -523,7 +524,7 @@ a:active {
 }
 
 .my-chats {
-  width: 15%;
+  width: 300px;
   height: 100%;
   /* border-right: 2px solid gray; */
   background-color: #253140;
@@ -799,7 +800,7 @@ a:active {
 
 .action-chat {
   position: relative;
-  width: 13vh;
+  width: 120px;
   height: 5vh;
   outline: none;
   border: none;
@@ -914,6 +915,7 @@ a:active {
   justify-content: center;
   border-radius: 10px;
   gap: 2vh;
+  z-index: 100;
 }
 
 .mm-option {
