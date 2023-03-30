@@ -25,7 +25,7 @@ let aboutTemplate = () => html`<sector class="about-page">
   </div>
   <div class="about-box">
     <div class="about-leftimg">
-      <img src="/images/kristiyan.jpg" alt="" />
+      <img src="/images/default-user.png" alt="" />
     </div>
     <div class="about-rightblock">
       <div class="about-title">

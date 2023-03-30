@@ -7,6 +7,9 @@ import {
   toggleLoading,
 } from "./utils.js";
 import { html, page } from "./lib.js";
+let contextElement = null;
+let isEditing = false;
+let editingMessageId = null;
 
 let chatsTemplate = (
   chats,
@@ -31,8 +34,8 @@ let chatsTemplate = (
   </div>
 
   <div class="message-menu">
-    <div class="mm-option">Edit</div>
-    <div class="mm-option">Delete</div>
+    <a @click=${editMessage} href="javascript:void(0)" class="mm-option">Edit</a>
+    <a @click=${deleteMessage} href="javascript:void(0)" class="mm-option">Delete</a>
   </div>
 
   <div class="my-chats">
@@ -74,6 +77,12 @@ let chatsTemplate = (
           id="message-input"
           @keyup=${(e) => {
             if (e.key === "Enter" || e.keyCode === 13) {
+              if (isEditing) {
+                editMessageSend(e.target.value);
+                isEditing = false;
+                editingMessageId = null;
+                return;
+              }
               sendMessage(e.target.value);
               e.target.value = "";
             }
@@ -124,6 +133,7 @@ export async function showChatsPage(ctx) {
 
   $(document).bind("click", function (event) {
     document.querySelector(".message-menu").style.display = "none";
+    contextElement = null;
   });
 
   document
@@ -270,35 +280,35 @@ async function loadChat(e, newId) {
     let chatPage = document.querySelector(".chat-page");
     chatPage.setAttribute("data-id", id);
     let chatInfo = await get(`/chatApp/chats/${id}`);
+    let messages = await get(`/chatApp/chats/${id}/messages`);
     let chatMessages = chatPage.querySelector(".chat-main");
     chatMessages.innerHTML = "";
     chatPage.querySelector(".chat-header span").textContent = chatInfo.name;
     chatPage
       .querySelector("#message-input")
       .setAttribute("placeholder", `Message #${chatInfo.name}`);
-    if (chatInfo.messages != undefined && chatInfo.messages.length > 0) {
-      chatInfo.messages.forEach((m) => {
-        let div = document.createElement("div");
-        div.setAttribute("class", "chat-message");
-        let sendDate = new Date(m.sendDate);
-        div.innerHTML = `
+    for (const [msgId, msgContent] of Object.entries(messages)) {
+      let div = document.createElement("div");
+      div.setAttribute("class", "chat-message");
+      div.setAttribute("data-id", msgId);
+      let sendDate = new Date(msgContent.sendDate);
+      div.innerHTML = `
               <img
                   class="message-avatar"
-                  src="${m.senderImage}"
+                  src="${msgContent.senderImage}"
                   alt=""
               />
               <div class="message-sender">
                   <div class="sender">${
-                    m.senderName
+                    msgContent.senderName
                   } <span>${sendDate.getDate()}/${sendDate.getMonth()}/${sendDate.getFullYear()} - ${sendDate.getHours()}:${sendDate.getMinutes()}</span></div>
-                  <div class="message"><span>${m.content}</span></div>
+                  <div class="message"><span>${msgContent.content}</span></div>
               </div>
         `;
-        if (m.senderId && m.senderId == userData.id) {
-          div.addEventListener("contextmenu", openContext);
-        }
-        chatMessages.appendChild(div);
-      });
+      if (msgContent.senderId && msgContent.senderId == userData.id) {
+        div.addEventListener("contextmenu", openContext);
+      }
+      chatMessages.appendChild(div);
     }
   }
 }
@@ -309,7 +319,6 @@ async function sendMessage(msg) {
 
   if (chatId != null && msg != "") {
     let userData = JSON.parse(localStorage.getItem("userData"));
-    let chatInfo = await get(`/chatApp/chats/${chatId}`);
     let msgData = {
       senderId: userData.id,
       senderImage: userData.img,
@@ -317,14 +326,7 @@ async function sendMessage(msg) {
       sendDate: new Date(),
       content: msg,
     };
-    let messages = chatInfo.messages || [];
-    messages.push(msgData);
-    await put(`/chatApp/chats/${chatId}`, {
-      name: chatInfo.name,
-      password: chatInfo.password,
-      ownerId: chatInfo.ownerId,
-      messages,
-    });
+    await post(`/chatApp/chats/${chatId}/messages`, msgData);
     loadChat();
   }
 }
@@ -358,6 +360,7 @@ function openContext(event) {
   document.querySelector(".message-menu").style.display = "flex";
   document.querySelector(".message-menu").style.top = mouseY(event) + "px";
   document.querySelector(".message-menu").style.left = mouseX(event) + "px";
+  contextElement = document.elementFromPoint(event.clientX, event.clientY);
   window.event.returnValue = false;
 }
 
@@ -393,4 +396,54 @@ function mouseY(evt) {
 
 function refreshChats() {
   page.redirect("/mychats");
+}
+
+async function editMessage() {
+  isEditing = true;
+  let msgId =
+    contextElement.getAttribute("data-id") ||
+    contextElement.parentElement.getAttribute("data-id") ||
+    contextElement.parentElement.parentElement.getAttribute("data-id") ||
+    contextElement.parentElement.parentElement.parentElement.getAttribute(
+      "data-id"
+    );
+  let chatId = document.querySelector(".chat-page").getAttribute("data-id");
+  let input = document
+    .querySelector(".chat-page")
+    .querySelector("#message-input");
+
+  let message = await get(`/chatApp/chats/${chatId}/messages/${msgId}`);
+  input.value = message.content;
+  editingMessageId = msgId;
+}
+
+async function editMessageSend(event) {
+  let msgId = editingMessageId;
+  let chatId = document.querySelector(".chat-page").getAttribute("data-id");
+  let newMsg = event;
+  let message = await get(`/chatApp/chats/${chatId}/messages/${msgId}`);
+  let input = document
+    .querySelector(".chat-page")
+    .querySelector("#message-input");
+  message.content = newMsg;
+  input.value = "";
+
+  await put(`/chatApp/chats/${chatId}/messages/${msgId}`, message);
+  loadChat();
+  isEditing = false;
+}
+
+async function deleteMessage() {
+  if (confirm("Are you sure you want to delete this message?")) {
+    let msgId =
+      contextElement.getAttribute("data-id") ||
+      contextElement.parentElement.getAttribute("data-id") ||
+      contextElement.parentElement.parentElement.getAttribute("data-id") ||
+      contextElement.parentElement.parentElement.parentElement.getAttribute(
+        "data-id"
+      );
+    let chatId = document.querySelector(".chat-page").getAttribute("data-id");
+    await del(`/chatApp/chats/${chatId}/messages/${msgId}`);
+    loadChat();
+  }
 }

@@ -443,7 +443,7 @@ a:active {
   height: fit-content;
   height: 5vh;
   background-color: red;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
@@ -1104,4 +1104,8 @@ a:active {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.settings-option ::placeholder {
+  color: transparent;
 }

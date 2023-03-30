@@ -15,10 +15,7 @@ let navTemplate = (user) => html` <a
     ><i class="fa-brands fa-linkedin"></i
   ></a>
   <a class="header-option" href="/">Home</a>
-  ${user
-    ? html`<a class="header-option" href="/mychats">My Chats</a>
-        <a class="header-option" href="/onetimechat">One-Time Chat</a>`
-    : null}
+  ${user ? html`<a class="header-option" href="/mychats">My Chats</a>` : null}
 
   <a class="header-option" href="/about">About</a>
 
@@ -27,8 +24,8 @@ let navTemplate = (user) => html` <a
     class="header-option header-right"
     id="user-menu"
   >
-    ${user && user.avatar
-      ? html`<img class="header-image" src="${user.avatar}" />`
+    ${user && user.img
+      ? html`<img class="header-image" src="${user.img}" />`
       : html`<i class="fa-solid fa-user"></i>`}
   </div>`;
 

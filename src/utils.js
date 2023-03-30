@@ -49,9 +49,11 @@ export function showNotification(text, color) {
   let notifElem = document.getElementById("notification");
   notifElem.innerHTML = text;
   notifElem.style.backgroundColor = color;
+  notifElem.style.display = "flex";
   notifElem.style.opacity = "1";
   setTimeout(() => {
     notifElem.style.opacity = "0";
+    notifElem.style.display = "none";
   }, 3000);
 }
 
