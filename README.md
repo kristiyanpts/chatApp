@@ -4,7 +4,7 @@ This is my personal project. I have been working on it for some time now and it 
 
 ## Usage
 
-Once you open the website you will be on the Home page. You will not be able to chat until you sign in or register. Once you sign in/register you will see the navigation tab "My Chats". By clicking it you will be redirected to the chat page. From there you can either join or create a new chat. The One-Time Chat option is yet to be developed so it doesn't work for now.
+Once you open the website you will be on the Home page. You will not be able to chat until you sign in or register. Once you sign in/register you will see the navigation tab "My Chats". By clicking it you will be redirected to the chat page. From there you can either join or create a new chat. You can delete or edit you message. Chats can be deleted by the creator. Joined chats can be left. 
 
 ## Project Maintenance
 
@@ -12,11 +12,11 @@ This project is currently ongoing and will be maintained by me. If you have any 
 
 ## Screenshots
 
-### Home Page !!NOT DONE YET!!
+### Home Page
+![Imgur](https://imgur.com/iCr5E70.png)
 
-### About Page !!NOT DONE YET!!
-
-### One-Time Chat Page !!NOT DONE YET!!
+### About Page
+![Imgur](https://imgur.com/NEr0NYn.png)
 
 ### Login Form
 ![Imgur](https://imgur.com/vhQS22o.png)
@@ -32,3 +32,5 @@ This project is currently ongoing and will be maintained by me. If you have any 
 
 ### Chats Page - Selected
 ![Imgur](https://imgur.com/UgHb3Ho.png)
+
+### One-Time Chat Page - Deleted/Discontinued
