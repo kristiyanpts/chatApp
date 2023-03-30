@@ -48,7 +48,12 @@ let aboutTemplate = () => html`<sector class="about-page">
         Mentor/Teacher
         <span class="about-name"> - Nadezhda Manchevska</span>
       </div>
-      <div class="about-description"></div>
+      <div class="about-description">
+        Nadezhda is an Informatics teacher at PGIT "Prof. D-r Asen Zlatarov",
+        Petrich. She is mainly teaching Web Design and C# OOP. She was
+        Kristiyan's Mentor in different coding competitions. She has been real
+        support for him throughout his years of studying.
+      </div>
     </div>
     <div class="about-rightimg">
       <img src="/images/default-user.png" alt="" />
