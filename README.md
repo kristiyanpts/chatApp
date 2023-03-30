@@ -4,7 +4,7 @@ This is my personal project. I have been working on it for some time now and it 
 
 ## Usage
 
-Once you open the website you will be on the Home page. You will not be able to chat until you sign in or register. Once you sign in/register you will see the navigation tab "My Chats". By clicking it you will be redirected to the chat page. From there you can either join or create a new chat. The One-Time Chat option is yet to be developed so it doesn't work for now.
+Once you open the website you will be on the Home page. You will not be able to chat until you sign in or register. Once you sign in/register you will see the navigation tab "My Chats". By clicking it you will be redirected to the chat page. From there you can either join or create a new chat. You can delete or edit you message. Chats can be deleted by the creator. Joined chats can be left. 
 
 ## Project Maintenance
 
