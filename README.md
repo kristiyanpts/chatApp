@@ -12,11 +12,11 @@ This project is currently ongoing and will be maintained by me. If you have any 
 
 ## Screenshots
 
-### Home Page !!NOT DONE YET!!
+### Home Page
+![Imgur](https://imgur.com/iCr5E70.png)
 
-### About Page !!NOT DONE YET!!
-
-### One-Time Chat Page !!NOT DONE YET!!
+### About Page
+![Imgur](https://imgur.com/NEr0NYn.png)
 
 ### Login Form
 ![Imgur](https://imgur.com/vhQS22o.png)
@@ -32,3 +32,5 @@ This project is currently ongoing and will be maintained by me. If you have any 
 
 ### Chats Page - Selected
 ![Imgur](https://imgur.com/UgHb3Ho.png)
+
+### One-Time Chat Page - Deleted/Discontinued
