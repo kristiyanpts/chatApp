@@ -4,27 +4,22 @@ import { showChatsPage } from "./myChats.js";
 import { showRegisterPage } from "./register.js";
 import { selectOption, showSettingsPage } from "./settings.js";
 import page from "../node_modules/page/page.mjs";
-// import {
-//   saveEmail,
-//   saveUsername,
-//   savePassword,
-//   deleteAccount,
-// } from "./update.js";
-// import { checkUserState, hideSections, toggleUserMenu } from "./utils.js";
 import { render } from "./lib.js";
 import { showNav } from "./nav.js";
 import { showPage } from "./settings.js";
 import { showNotification } from "./utils.js";
+import { showAaboutPage } from "./about.js";
 
 let main = document.querySelector("main");
 
 page(decorateContenxt);
-page("/index.html", "/");
+// page("/index.html", "/");
 page("/", showHomePage);
 page("/mychats", showChatsPage);
 page("/login", showLoginPage);
 page("/register", showRegisterPage);
 page("/settings", showSettingsPage);
+page("/about", showAaboutPage);
 // page("*", showErrorPage);
 
 page("/settings/username", (e) => settingsPage(e, "username-option-page"));
@@ -75,7 +70,3 @@ function settingsPage(e, page) {
 //     .getElementById("delete-account")
 //     .addEventListener("click", deleteAccount);
 // };
-
-window.api = function () {
-  showNotification("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "red");
-};

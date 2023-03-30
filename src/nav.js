@@ -4,7 +4,17 @@ import { getUserData, toggleUserMenu } from "./utils.js";
 let navHeader = document.querySelector(".page-header");
 let userMenu = document.querySelector(".user-menu");
 
-let navTemplate = (user) => html`<a class="header-option" href="/">Home</a>
+let navTemplate = (user) => html` <a
+    class="header-option header-left"
+    href="https://www.instagram.com/kristiqnpetsanov/"
+    ><i class="fa-brands fa-instagram"></i
+  ></a>
+  <a
+    class="header-option header-left-2"
+    href="https://www.linkedin.com/in/kristiyan-petsanov-82ba23252/"
+    ><i class="fa-brands fa-linkedin"></i
+  ></a>
+  <a class="header-option" href="/">Home</a>
   ${user
     ? html`<a class="header-option" href="/mychats">My Chats</a>
         <a class="header-option" href="/onetimechat">One-Time Chat</a>`
@@ -17,8 +27,8 @@ let navTemplate = (user) => html`<a class="header-option" href="/">Home</a>
     class="header-option header-right"
     id="user-menu"
   >
-    ${user && user.image
-      ? html`<img class="header-image" src="${user.image}" />`
+    ${user && user.avatar
+      ? html`<img class="header-image" src="${user.avatar}" />`
       : html`<i class="fa-solid fa-user"></i>`}
   </div>`;
 
