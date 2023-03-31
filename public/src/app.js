@@ -3,7 +3,6 @@ import { showLoginPage } from "./login.js";
 import { showChatsPage } from "./myChats.js";
 import { showRegisterPage } from "./register.js";
 import { selectOption, showSettingsPage } from "./settings.js";
-import page from "../node_modules/page/page.mjs";
 import { render } from "./lib.js";
 import { showNav } from "./nav.js";
 import { showPage } from "./settings.js";
