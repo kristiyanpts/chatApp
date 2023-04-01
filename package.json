@@ -2,9 +2,11 @@
   "name": "chatapp",
   "version": "1.0.0",
   "description": "This is my personal project. I have been working on it for some time now and it is still work in progress. You can find a preview [here](https://krisdevbg.github.io/chatApp/). It is still not finished so do not expect full functionality.",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -19,6 +21,12 @@
   "homepage": "https://github.com/KrisDevBG/chatApp#readme",
   "dependencies": {
     "lit-html": "^2.7.0",
-    "page": "^1.11.6"
+    "lodash": "^4.17.21",
+    "page": "^1.11.6",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "webpack": "^5.77.0",
+    "webpack-cli": "^5.0.1"
   }
 }
