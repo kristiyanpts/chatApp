@@ -8,18 +8,19 @@ import { showNav } from "./nav.js";
 import { showPage } from "./settings.js";
 import { showNotification } from "./utils.js";
 import { showAaboutPage } from "./about.js";
+import { showErrorPage } from "./error.js";
 
 let main = document.querySelector("main");
 
 page(decorateContenxt);
-// page("/index.html", "/");
+page("/index.html", "/");
 page("/", showHomePage);
 page("/mychats", showChatsPage);
 page("/login", showLoginPage);
 page("/register", showRegisterPage);
 page("/settings", showSettingsPage);
 page("/about", showAaboutPage);
-// page("*", showErrorPage);
+page("*", showErrorPage);
 
 page("/settings/username", (e) => settingsPage(e, "username-option-page"));
 page("/settings/pinformation", (e) =>
