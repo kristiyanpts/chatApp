@@ -8,7 +8,6 @@ export async function loginUser(email, password) {
   let user = null;
   let userId = null;
   for (const [userIdd, userInfo] of Object.entries(users)) {
-    console.log(userInfo);
     if (userInfo.email === email && userInfo.password === password) {
       user = userInfo;
       userId = userIdd;

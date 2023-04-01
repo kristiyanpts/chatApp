@@ -11,6 +11,8 @@ export async function saveUsername() {
     img: newAvatar,
     email: userData.email,
     password: userData.password,
+    chats: userData.chats,
+    id: userData.id,
   });
   showNotification("Updated username and avatar!", "green");
   reloadUserData();
@@ -24,6 +26,8 @@ export async function saveEmail() {
     img: userData.img,
     email: newEmail,
     password: userData.password,
+    chats: userData.chats,
+    id: userData.id,
   });
   showNotification(
     "Updated email successfully! You have been logged out.",
@@ -56,6 +60,8 @@ export async function savePassword() {
     img: userData.img,
     email: userData.email,
     password: newPassword,
+    chats: userData.chats,
+    id: userData.id,
   });
   showNotification(
     "Updated password successfully! You have been logged out.",

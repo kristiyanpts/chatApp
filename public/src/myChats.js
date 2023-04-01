@@ -128,7 +128,6 @@ export async function showChatsPage(ctx) {
   let user = await get(`/chatApp/users/${userData.id}`);
   let userChatsNames = user.chats || [];
   let userChats = await getChats(userChatsNames);
-  console.log(userChats);
   ctx.render(chatsTemplate(userChats, userChatsNames, user));
 
   $(document).bind("click", function (event) {

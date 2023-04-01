@@ -20,14 +20,13 @@ page("/login", showLoginPage);
 page("/register", showRegisterPage);
 page("/settings", showSettingsPage);
 page("/about", showAaboutPage);
-page("*", showErrorPage);
-
 page("/settings/username", (e) => settingsPage(e, "username-option-page"));
 page("/settings/pinformation", (e) =>
   settingsPage(e, "pinformation-option-page")
 );
 page("/settings/account", (e) => settingsPage(e, "account-option-page"));
 page("/settings/actions", (e) => settingsPage(e, "account-actions-page"));
+page("*", showErrorPage);
 
 showNav();
 page.start();

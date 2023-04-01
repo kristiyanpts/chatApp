@@ -1,32 +1,5 @@
 import { get } from "./data/api.js";
 
-export function checkUserState() {
-  let userData = JSON.parse(localStorage.getItem("userData"));
-  let userNavs = Array.from(document.getElementsByClassName("user"));
-  let guestNavs = Array.from(document.getElementsByClassName("guest"));
-  let profileName = document.getElementById("profile-name");
-  let userMenu = document.getElementById("user-menu");
-  if (userData) {
-    userNavs.forEach((u) => (u.style.display = "inline-block"));
-    guestNavs.forEach((g) => (g.style.display = "none"));
-    profileName.innerHTML = `Welcome, ${userData.username}`;
-    if (
-      userData.img != "No Avatar" &&
-      userData.img != "" &&
-      userData.img != undefined
-    ) {
-      userMenu.innerHTML = `<img class="header-image" src="${userData.img}"/>`;
-    } else {
-      userMenu.innerHTML = `<i class="fa-solid fa-user"></i>`;
-    }
-  } else {
-    userNavs.forEach((u) => (u.style.display = "none"));
-    guestNavs.forEach((g) => (g.style.display = "inline-block"));
-    profileName.innerHTML = "Welcome, Guest!";
-    userMenu.innerHTML = `<i class="fa-solid fa-user"></i>`;
-  }
-}
-
 let menuOpen = false;
 export function toggleUserMenu() {
   let menu = document.querySelector(".user-menu");
@@ -83,7 +56,6 @@ export async function reloadUserData() {
       id: userData.id,
     })
   );
-  checkUserState();
 }
 
 export function createSubmitHandler(callback) {

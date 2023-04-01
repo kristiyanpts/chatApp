@@ -158,11 +158,9 @@ export function showSettingsPage(ctx) {
 
 export function selectOption(e) {
   let elem = document.querySelector(`a[href="${e.path}"]`);
-  console.log(elem);
   let menuOptions = Array.from(document.querySelectorAll(".menu-option"));
   menuOptions.forEach((o) => o.classList.remove("settings-selected"));
   elem.classList.add("settings-selected");
-  console.log(elem.classList);
 }
 
 export function showPage(id) {
