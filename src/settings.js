@@ -10,18 +10,18 @@ let settingsTemplate = () => html`<sector class="settings-page">
   <div class="settings-nav">
     <div class="s-nav-title">Account <br />Management</div>
     <div class="s-nav-menu">
-      <a class="menu-option" href="/chatApp/settings/username">
+      <a class="menu-option" href="/settings/username">
         <i class="fa-solid fa-signature"></i> <span>username</span>
       </a>
-      <a class="menu-option" href="/chatApp/settings/pinformation">
+      <a class="menu-option" href="/settings/pinformation">
         <i class="fa-solid fa-user"></i>
         <span>personal information</span>
       </a>
-      <a class="menu-option" href="/chatApp/settings/account">
+      <a class="menu-option" href="/settings/account">
         <i class="fa-solid fa-key"></i>
         <span>account sign-in</span>
       </a>
-      <a class="menu-option" href="/chatApp/settings/actions">
+      <a class="menu-option" href="/settings/actions">
         <i class="fa-solid fa-circle-exclamation"></i>
         <span>account actions</span>
       </a>
@@ -152,7 +152,7 @@ let settingsTemplate = () => html`<sector class="settings-page">
 
 export function showSettingsPage(ctx) {
   ctx.render(settingsTemplate());
-  ctx.page.redirect("/chatApp/settings/username");
+  ctx.page.redirect("/settings/username");
   loadUserData();
 }
 

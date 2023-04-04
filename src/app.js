@@ -13,26 +13,20 @@ import { showErrorPage } from "./error.js";
 let main = document.querySelector("main");
 
 page(decorateContenxt);
-page("/index.html", "/chatApp/");
-page("/chatApp/", showHomePage);
-page("/chatApp/mychats", showChatsPage);
-page("/chatApp/login", showLoginPage);
-page("/chatApp/register", showRegisterPage);
-page("/chatApp/settings", showSettingsPage);
-page("/chatApp/about", showAaboutPage);
-page("/chatApp/settings/username", (e) =>
-  settingsPage(e, "username-option-page")
-);
-page("/chatApp/settings/pinformation", (e) =>
+page("/index.html", "/");
+page("/", showHomePage);
+page("/mychats", showChatsPage);
+page("/login", showLoginPage);
+page("/register", showRegisterPage);
+page("/settings", showSettingsPage);
+page("/about", showAaboutPage);
+page("/settings/username", (e) => settingsPage(e, "username-option-page"));
+page("/settings/pinformation", (e) =>
   settingsPage(e, "pinformation-option-page")
 );
-page("/chatApp/settings/account", (e) =>
-  settingsPage(e, "account-option-page")
-);
-page("/chatApp/settings/actions", (e) =>
-  settingsPage(e, "account-actions-page")
-);
-page("/chatApp/*", showErrorPage);
+page("/settings/account", (e) => settingsPage(e, "account-option-page"));
+page("/settings/actions", (e) => settingsPage(e, "account-actions-page"));
+page("*", showErrorPage);
 
 showNav();
 page.start();

@@ -14,12 +14,10 @@ let navTemplate = (user) => html` <a
     href="https://www.linkedin.com/in/kristiyan-petsanov-82ba23252/"
     ><i class="fa-brands fa-linkedin"></i
   ></a>
-  <a class="header-option" href="/chatApp/">Home</a>
-  ${user
-    ? html`<a class="header-option" href="/chatApp/mychats">My Chats</a>`
-    : null}
+  <a class="header-option" href="/">Home</a>
+  ${user ? html`<a class="header-option" href="/mychats">My Chats</a>` : null}
 
-  <a class="header-option" href="/chatApp/about">About</a>
+  <a class="header-option" href="/about">About</a>
 
   <div
     @click=${toggleUserMenu}
@@ -36,7 +34,7 @@ let userMenuTemplate = (user, onLogout) => html`
     Welcome, ${(user && user.username) || "Guest"}!
   </div>
   ${user
-    ? html`<a class="user-menu-option" href="/chatApp/settings">
+    ? html`<a class="user-menu-option" href="/settings">
           <span>Settings</span> <i class="fa-solid fa-gear"></i>
         </a>
         <a
@@ -47,10 +45,10 @@ let userMenuTemplate = (user, onLogout) => html`
         >
           <span>Logout</span> <i class="fa-solid fa-right-from-bracket"></i>
         </a>`
-    : html`<a class="user-menu-option" href="/chatApp/login">
+    : html`<a class="user-menu-option" href="/login">
           <span>Sign In</span> <i class="fa-solid fa-right-to-bracket"></i>
         </a>
-        <a class="user-menu-option" href="/chatApp/register">
+        <a class="user-menu-option" href="/register">
           <span>Register</span> <i class="fa-solid fa-user-plus"></i>
         </a>`}
 `;
