@@ -394,7 +394,7 @@ function mouseY(evt) {
 }
 
 function refreshChats() {
-  page.redirect("/mychats");
+  page.redirect("/chatApp/mychats");
 }
 
 async function editMessage() {
