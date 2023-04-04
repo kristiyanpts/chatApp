@@ -13,7 +13,7 @@ let homeTemplate = () => html`<sector class="home-page">
     </div>
   </div>
   <div class="right-side">
-    <img src="/images/dog-chatting.png" alt="" class="chat-dog" />
+    <img src="./chatApp/images/dog-chatting.png" alt="" class="chat-dog" />
   </div>
 </sector>`;
 

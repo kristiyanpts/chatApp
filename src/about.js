@@ -25,7 +25,7 @@ let aboutTemplate = () => html`<sector class="about-page">
   </div>
   <div class="about-box">
     <div class="about-leftimg">
-      <img src="/images/default-user.png" alt="" />
+      <img src="./chatApp/images/default-user.png" alt="" />
     </div>
     <div class="about-rightblock">
       <div class="about-title">
@@ -56,7 +56,7 @@ let aboutTemplate = () => html`<sector class="about-page">
       </div>
     </div>
     <div class="about-rightimg">
-      <img src="/images/default-user.png" alt="" />
+      <img src="./chatApp/images/default-user.png" alt="" />
     </div>
   </div>
 </sector>`;
