@@ -47,7 +47,7 @@ export function showRegisterPage(ctx) {
       return showNotification("Passwords do not match.", "red");
     let regged = await registerUser(email, password, username);
     if (regged) {
-      ctx.page.redirect("/");
+      ctx.page.redirect("/chatApp/");
       ctx.updateNav();
     }
   }

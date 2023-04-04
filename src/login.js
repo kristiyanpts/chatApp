@@ -33,7 +33,7 @@ export function showLoginPage(ctx) {
       return showNotification("All fields are required.", "red");
     let logged = await loginUser(email, password);
     ctx.updateNav();
-    if (logged) return ctx.page.redirect("/");
+    if (logged) return ctx.page.redirect("/chatApp/");
     return showNotification("Wrong email or password.", "red");
   }
 }
