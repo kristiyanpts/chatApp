@@ -44,5 +44,5 @@ export async function registerUser(email, password, username) {
 export async function logoutUser() {
   localStorage.clear();
   showNav();
-  page.redirect("/chatApp/");
+  page.redirect("/");
 }
