@@ -11,11 +11,19 @@ let contextElement = null;
 let isEditing = false;
 let editingMessageId = null;
 
-let chatsTemplate = (
-  chats,
-  chatsNames,
-  user
-) => html`<sector class="chats-page">
+let chatsTemplate = (chats, chatsNames, user) => html`<sector
+  class="chats-page"
+>
+  <div class="message-menu">
+    <a @click=${editMessage} href="javascript:void(0)" class="mm-option"
+      >Edit</a
+    >
+    <a @click=${deleteMessage} href="javascript:void(0)" class="mm-option"
+      >Delete</a
+    >
+  </div>
+
+  <div class="my-chats">
   <div class="chat-menu">
     <span>Join Chat</span>
     <input
@@ -32,13 +40,6 @@ let chatsTemplate = (
     />
     <button @click=${actionChat}  id="chat-submit">Join</@button>
   </div>
-
-  <div class="message-menu">
-    <a @click=${editMessage} href="javascript:void(0)" class="mm-option">Edit</a>
-    <a @click=${deleteMessage} href="javascript:void(0)" class="mm-option">Delete</a>
-  </div>
-
-  <div class="my-chats">
     <div class="chats-header">My Chats</div>
     <div @click=${chatsClick} class="chats">
       ${
@@ -70,7 +71,7 @@ let chatsTemplate = (
           class="fa-solid fa-circle-plus add-file"
           @click=${() => document.getElementById("file-input").click()}
         ></i>
-        <input id="file-input" type="file" name="name" style="display: none" />
+        <input @change=${onChangeFile} id="file-input" accept="image/*"  type="file" name="name" style="display: none" />
         <input
           type="text"
           name="message"
@@ -147,9 +148,18 @@ function emojiClick(event) {
   document.querySelector("#message-input").value += event.detail.unicode;
 }
 
-//   document.getElementById("file-input").addEventListener("change", (e) => {
-//     // TODO: Implement file loading function
-//   });
+function onChangeFile(e) {
+  let input = this;
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+      sendMessage(URL.createObjectURL(input.files[0]));
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
 
 function chatsClick(e) {
   if (e.target.classList.contains("chat-option")) {
@@ -286,11 +296,15 @@ async function loadChat(e, newId) {
     chatPage
       .querySelector("#message-input")
       .setAttribute("placeholder", `Message #${chatInfo.name}`);
+
     for (const [msgId, msgContent] of Object.entries(messages)) {
       let div = document.createElement("div");
       div.setAttribute("class", "chat-message");
       div.setAttribute("data-id", msgId);
       let sendDate = new Date(msgContent.sendDate);
+      let urlFied = urlify(msgContent.content);
+      if (urlFied.includes("http") || urlFied.includes("data:image"))
+        div.style.height = "330px";
       div.innerHTML = `
               <img
                   class="message-avatar"
@@ -301,7 +315,19 @@ async function loadChat(e, newId) {
                   <div class="sender">${
                     msgContent.senderName
                   } <span>${sendDate.getDate()}/${sendDate.getMonth()}/${sendDate.getFullYear()} - ${sendDate.getHours()}:${sendDate.getMinutes()}</span></div>
-                  <div class="message"><span>${msgContent.content}</span></div>
+                  ${
+                    urlify(msgContent.content).includes("http") ||
+                    urlFied.includes("data:image")
+                      ? `<div
+                          class="message"
+                          style="height: 300px!important; width: 500px;"
+                        >
+                          <span>${urlify(msgContent.content)}</span>
+                        </div>`
+                      : `<div class="message">
+                          <span>${urlify(msgContent.content)}</span>
+                        </div>`
+                  }
               </div>
         `;
       if (msgContent.senderId && msgContent.senderId == userData.id) {
@@ -310,6 +336,16 @@ async function loadChat(e, newId) {
       chatMessages.appendChild(div);
     }
   }
+}
+
+function urlify(text) {
+  if (text.includes("blob:")) {
+    return `<img src="${text}"></img>`;
+  }
+  var urlRegex = /(https?:\/\/[^\s]+)/g;
+  return text.replace(urlRegex, function (url) {
+    return '<img src="' + url + '">' + url + "</img>";
+  });
 }
 
 async function sendMessage(msg) {

@@ -49,28 +49,27 @@ body {
 
 .header-right {
   position: absolute;
-  right: 20vh;
+  right: 20px;
 }
 
 .header-left {
   position: absolute;
-  left: 18vh;
+  left: 10px;
 }
 
 .header-left-2 {
   position: absolute;
-  left: 23vh;
+  left: 50px;
 }
 
 .user-menu {
   position: absolute;
-  right: 6vh;
+  right: 0;
   width: 30vh;
   height: 20vh;
   background-color: #435973;
   top: 5vh;
   border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
   display: none;
   flex-direction: column;
   z-index: 1;
@@ -538,6 +537,10 @@ a:active {
   height: 100%;
   /* border-right: 2px solid gray; */
   background-color: #253140;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .chat-page {
@@ -561,7 +564,6 @@ a:active {
   top: 3vh;
   width: 80%;
   height: 87%;
-  left: 10%;
   /* background-color: rgb(52, 68, 89); */
   overflow: hidden;
   overflow-y: scroll;
@@ -570,7 +572,7 @@ a:active {
 .chat-option {
   position: relative;
   width: 100%;
-  height: 3vh;
+  height: 30px;
   background-color: transparent;
   border-radius: 5px;
   margin-top: 1vh;
@@ -681,12 +683,12 @@ a:active {
 .chat-message {
   position: relative;
   display: flex;
-  width: 100%;
-  min-height: min-content;
-  height: 6vh;
-  /* background-color: pink; */
+  min-width: 100%;
+  height: 60px;
+  min-height: 60px;
   transition: 0.2s;
   margin-top: 1vh;
+  object-fit: contain;
 }
 
 .chat-message:hover {
@@ -699,8 +701,7 @@ a:active {
   height: 50px;
   border-radius: 50%;
   left: 1vh;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 5px;
 }
 
 .message-sender {
@@ -729,22 +730,32 @@ a:active {
 .message {
   position: absolute;
   bottom: 0;
-  width: 100%;
+  width: 95%;
   height: 70%;
-  white-space: nowrap;
   overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
 }
 
 .message span {
   position: absolute;
+  width: 100%;
   top: 50%;
   transform: translateY(-50%);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.message span img {
+  position: relative;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .chat-input {
   width: 100%;
-  height: 10vh;
+  height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -752,8 +763,8 @@ a:active {
 
 .input-field {
   position: relative;
-  width: 99%;
-  height: 5vh;
+  width: 90%;
+  height: 70%;
   background-color: #253140;
   border-radius: 10px;
 }
@@ -810,8 +821,8 @@ a:active {
 
 .action-chat {
   position: relative;
-  width: 120px;
-  height: 5vh;
+  width: 100px;
+  height: 50px;
   outline: none;
   border: none;
   border-radius: 10px;
@@ -836,8 +847,8 @@ a:active {
 
 .chat-menu {
   position: absolute;
-  width: 14%;
-  left: 0.5%;
+  width: 210px;
+  /* left: 0.5%; */
   height: 22vh;
   background-color: #344459;
   bottom: 8vh;
