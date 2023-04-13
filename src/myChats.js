@@ -10,6 +10,7 @@ import { html, page } from "./lib.js";
 let contextElement = null;
 let isEditing = false;
 let editingMessageId = null;
+let currentInterval = null;
 
 let chatsTemplate = (chats, chatsNames, user) => html`<sector
   class="chats-page"
@@ -63,6 +64,7 @@ let chatsTemplate = (chats, chatsNames, user) => html`<sector
     <div class="chat-header">
       <i class="fa-solid fa-hashtag"></i>
       <span>Select Chat</span>
+      <div class="refresh-text">Chat Refresh: 00:<text id="refresh-seconds">15</text></div>
     </div>
     <div class="chat-main"></div>
     <div class="chat-input">
@@ -308,7 +310,7 @@ async function loadChat(e, newId) {
       div.innerHTML = `
               <img
                   class="message-avatar"
-                  src="${msgContent.senderImage}"
+                  src="${msgContent.senderImage || "/images/default-user.png"}"
                   alt=""
               />
               <div class="message-sender">
@@ -336,6 +338,9 @@ async function loadChat(e, newId) {
       chatMessages.appendChild(div);
     }
   }
+
+  clearInterval(currentInterval);
+  currentInterval = setInterval(refreshChat, 15000);
 }
 
 function urlify(text) {
@@ -479,6 +484,24 @@ async function deleteMessage() {
       );
     let chatId = document.querySelector(".chat-page").getAttribute("data-id");
     await del(`/chatApp/chats/${chatId}/messages/${msgId}`);
+    loadChat();
+  }
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function refreshChat() {
+  let chatPage = document.querySelector(".chat-page") || null;
+  if (chatPage != null && chatPage.getAttribute("data-id") != null) {
+    let refreshSeconds = document.querySelector("#refresh-seconds");
+    for (let sec = 15; sec > 0; sec--) {
+      await sleep(1000);
+      sec < 10
+        ? (refreshSeconds.textContent = "0" + sec)
+        : (refreshSeconds.textContent = sec);
+    }
     loadChat();
   }
 }
