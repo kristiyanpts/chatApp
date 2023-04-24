@@ -52,6 +52,11 @@ body {
   right: 20px;
 }
 
+.header-info {
+  position: absolute;
+  right: 60px;
+}
+
 .refresh-text {
   position: absolute;
   right: 10px;
@@ -1127,4 +1132,44 @@ a:active {
 
 .settings-option ::placeholder {
   color: transparent;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted #435973;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 220px;
+  background-color: #435973;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  top: 150%;
+  left: -300%;
+  margin-left: -60px;
+  font-size: 20px;
+  /* text-transform: lowercase; */
+  font-variant: normal;
+  font-family: "Sofia Sans Semi Condensed", sans-serif;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 67%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #435973 transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }

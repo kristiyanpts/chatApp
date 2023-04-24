@@ -4,7 +4,8 @@ import { getUserData, toggleUserMenu } from "./utils.js";
 let navHeader = document.querySelector(".page-header");
 let userMenu = document.querySelector(".user-menu");
 
-let navTemplate = (user) => html` <a
+let navTemplate = (user) => html`
+  <a
     class="header-option header-left"
     href="https://www.instagram.com/kristiqnpetsanov/"
     ><i class="fa-brands fa-instagram"></i
@@ -27,7 +28,15 @@ let navTemplate = (user) => html` <a
     ${user && user.img
       ? html`<img class="header-image" src="${user.img}" />`
       : html`<i class="fa-solid fa-user"></i>`}
-  </div>`;
+  </div>
+  <div class="header-option header-info">
+    <i class="fa-solid fa-circle-info tooltip"
+      ><span class="tooltiptext"
+        >All rights reserved &#169; Kristiyan Petsanov</span
+      ></i
+    >
+  </div>
+`;
 
 let userMenuTemplate = (user, onLogout) => html`
   <div class="profile-name" id="profile-name">
